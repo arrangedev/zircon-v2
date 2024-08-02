@@ -7,7 +7,7 @@ export default function ClientSection() {
       <div className="py-14">
         <div className="mx-auto max-w-screen-xl px-4 md:px-8">
           <h2 className="text-center text-sm font-semibold text-gray-600">
-            TRUSTED BY TOP TEAMS ON SOLANA
+            IN PARTNERSHIP WITH TOP TEAMS ON SOLANA
           </h2>
           <div className="mt-6">
             <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:gap-x-16 [&_path]:fill-white">
@@ -20,12 +20,12 @@ export default function ClientSection() {
               <li>
                 <img
                   src={`/metaplex-logo.png`}
-                  className="h-8 w-28 px-2 dark:brightness-0 dark:invert"
+                  className="w-28 px-2 dark:brightness-0 dark:invert"
                 />
               </li>
               <li>
                 <img
-                  src={`https://cdn.magicui.design/companies/GitHub.svg`}
+                  src={`/squads-logo.svg`}
                   className="h-8 w-28 px-2 dark:brightness-0 dark:invert"
                 />
               </li>

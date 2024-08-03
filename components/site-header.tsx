@@ -4,10 +4,12 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/utils/supabase/client";
 import { AnimatePresence, motion } from "framer-motion";
+import { get } from "http";
 import { AlignJustify, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { UserDropdown } from "./user-dropdown";
 
 const menuItem = [
   {
@@ -79,16 +81,18 @@ export function SiteHeader() {
     },
   };
 
-  const supabase = createClient();
-
-  /*
-  const { user } = supabase.auth.onAuthStateChange((event, session) => {
-    const user = supabase.auth.getUser()  
-  
-  })
-  */
-
+  const [user, setUser] = useState<any>(null);
   const [hamburgerMenuIsOpen, setHamburgerMenuIsOpen] = useState(false);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const supabase = createClient();
+      const { data: user } = await supabase.auth.getUser();
+      console.log(user, user.user?.user_metadata.email);
+      setUser(user.user);
+    };
+    getUser();
+  }, []);
 
   useEffect(() => {
     const html = document.querySelector("html");
@@ -111,22 +115,38 @@ export function SiteHeader() {
       <header className="fixed left-0 top-0 z-50 w-full translate-y-[-1rem] animate-fade-in border-b opacity-0 backdrop-blur-[12px] [--animation-delay:600ms]">
         <div className="container flex h-[3.5rem] items-center justify-between">
           <Link className="text-md flex items-center" href="/">
-            <Image src="/zircon-logo.svg" alt="Zircon Logo" width={40} height={40} className="w-32" />
+            <Image
+              src="/zircon-logo.svg"
+              alt="Zircon Logo"
+              width={40}
+              height={40}
+              className="w-32"
+            />
           </Link>
 
           <div className="ml-auto flex h-full items-center">
-            <Link className="mr-6 text-sm" href="/signin">
-              Log in
-            </Link>
-            <Link
-              className={cn(
-                buttonVariants({ variant: "secondary" }),
-                "mr-6 text-sm"
-              )}
-              href="/signup"
-            >
-              Sign up
-            </Link>
+            {user ? (
+              <UserDropdown
+                email={user.user_metadata.email}
+                avatar={user.user_metadata.avatar_url}
+                username={user.user_metadata.user_name}
+              />
+            ) : (
+              <>
+                <Link className="mr-6 text-sm" href="/signin">
+                  Log in
+                </Link>
+                <Link
+                  className={cn(
+                    buttonVariants({ variant: "secondary" }),
+                    "mr-6 text-sm"
+                  )}
+                  href="/signup"
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
           <button
             className="ml-6 md:hidden"
@@ -151,9 +171,15 @@ export function SiteHeader() {
           )}
         >
           <div className="container flex h-[3.5rem] items-center justify-between">
-          <Link className="text-md flex items-center" href="/">
-            <Image src="/zircon-logo.svg" alt="Zircon Logo" width={40} height={40} className="w-32" />
-          </Link>
+            <Link className="text-md flex items-center" href="/">
+              <Image
+                src="/zircon-logo.svg"
+                alt="Zircon Logo"
+                width={40}
+                height={40}
+                className="w-32"
+              />
+            </Link>
 
             <button
               className="ml-6 md:hidden"

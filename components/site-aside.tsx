@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   IconArrowLeft,
   IconBook,
@@ -7,10 +7,12 @@ import {
   IconCodeDots,
   IconCommand,
   IconDashboard,
+  IconLogout,
   IconSandbox,
   IconSchool,
   IconSettings,
   IconUserBolt,
+  IconUserCircle,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -18,10 +20,26 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Sidebar, SidebarBody, SidebarLink } from "./ui/sidebar";
 import { usePathname } from "next/navigation";
+import { createClient } from "@/lib/utils/supabase/client";
+import { getRandomAvatar } from "@/lib/get-random-avatar";
+import { logout } from "@/app/(auth)/login/actions";
 
 export default function SiteAside({ children }: { children: React.ReactNode }) {
+  const supabase = createClient();
   const pathname = usePathname();
+  const [user, setUser] = useState<any>(null);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: user } = await supabase.auth.getUser();
+      console.log(user, user.user?.user_metadata.email);
+      setUser(user.user);
+    };
+
+    getUser();
+  }, []);
+
   const links = [
     {
       label: "Home",
@@ -87,28 +105,61 @@ export default function SiteAside({ children }: { children: React.ReactNode }) {
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
               {links.map((link, idx) => (
-                <SidebarLink className={`font-neue p-1 rounded-md ${pathname === link.href ? "bg-[#FF25CF]/25" : "hover:bg-[#FF25CF]/10"}`} key={idx} link={link} />
+                <SidebarLink
+                  className={`font-neue p-1 rounded-md ${
+                    pathname === link.href
+                      ? "bg-[#FF25CF]/25"
+                      : "hover:bg-[#FF25CF]/10"
+                  }`}
+                  key={idx}
+                  link={link}
+                />
               ))}
             </div>
           </div>
-          <div>
-            <SidebarLink
-              className=""
-              link={{
-                label: "Joey Meere",
-                href: "#",
-                icon: (
-                  <Image
-                    src="/knux.jpeg"
-                    className="h-7 w-7 flex-shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
-                  />
-                ),
-              }}
-            />
-          </div>
+          {user ? (
+            <div className="flex gap-2 items-center justify-between">
+              <SidebarLink
+                className=""
+                link={{
+                  label: user?.user_metadata?.email,
+                  href: `/profile/${user?.user_metadata?.email}`,
+                  icon: (
+                    <Image
+                      src={getRandomAvatar(user?.user_metadata?.email)}
+                      className="h-7 w-7 flex-shrink-0 rounded-full"
+                      width={50}
+                      height={50}
+                      alt="Avatar"
+                    />
+                  ),
+                }}
+              />
+              <IconLogout
+                onClick={() => logout()}
+                stroke={1}
+                className={`text-neutral-700 dark:text-neutral-200 hover:text-neutral-300 h-5 w-5 ${
+                  !open && "hidden"
+                }`}
+              />
+            </div>
+          ) : (
+            <div className="flex gap-2 items-center justify-between">
+              <SidebarLink
+                className=""
+                link={{
+                  label: "Log in",
+                  href: "/login",
+                  icon: (
+                    <IconUserCircle
+                      stroke={1}
+                      className="h-7 w-7 flex-shrink-0"
+                    />
+                  ),
+                }}
+              />
+            </div>
+          )}
         </SidebarBody>
       </Sidebar>
       {children}

@@ -5,6 +5,7 @@ import TextShimmer from "@/components/magicui/text-shimmer";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { useInView } from "framer-motion";
+import Link from "next/link";
 import { useRef } from "react";
 
 export default function HeroSection() {
@@ -30,13 +31,17 @@ export default function HeroSection() {
         <br className="hidden md:block" /> the best Solana developer possible.
       </p>
       <div className="flex gap-2 items-center justify-center">
-        <Button className="translate-y-[-1rem] animate-fade-in gap-1 rounded-lg bg-stone-700 text-white hover:bg-stone-500  opacity-0 ease-in-out [--animation-delay:600ms]">
-          <span>Get started</span>
-        </Button>
-        <Button className="translate-y-[-1rem] animate-fade-in gap-1 rounded-lg text-white dark:text-black opacity-0 ease-in-out [--animation-delay:600ms]">
-          <span>Sign up for free </span>
-          <ArrowRightIcon className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
-        </Button>
+        <Link href="/home">
+          <Button className="translate-y-[-1rem] animate-fade-in gap-1 rounded-lg bg-stone-700 text-white hover:bg-stone-500  opacity-0 ease-in-out [--animation-delay:600ms]">
+            <span>Get started</span>
+          </Button>
+        </Link>
+        <Link href="/signup">
+          <Button className="translate-y-[-1rem] animate-fade-in gap-1 rounded-lg text-white dark:text-black opacity-0 ease-in-out [--animation-delay:600ms]">
+            <span>Sign up for free </span>
+            <ArrowRightIcon className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
+          </Button>
+        </Link>
       </div>
       <div
         ref={ref}

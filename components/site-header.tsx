@@ -2,6 +2,7 @@
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/lib/utils/supabase/client";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlignJustify, XIcon } from "lucide-react";
 import Image from "next/image";
@@ -78,6 +79,15 @@ export function SiteHeader() {
     },
   };
 
+  const supabase = createClient();
+
+  /*
+  const { user } = supabase.auth.onAuthStateChange((event, session) => {
+    const user = supabase.auth.getUser()  
+  
+  })
+  */
+
   const [hamburgerMenuIsOpen, setHamburgerMenuIsOpen] = useState(false);
 
   useEffect(() => {
@@ -141,9 +151,9 @@ export function SiteHeader() {
           )}
         >
           <div className="container flex h-[3.5rem] items-center justify-between">
-            <Link className="text-md flex items-center" href="/">
-              Magic UI
-            </Link>
+          <Link className="text-md flex items-center" href="/">
+            <Image src="/zircon-logo.svg" alt="Zircon Logo" width={40} height={40} className="w-32" />
+          </Link>
 
             <button
               className="ml-6 md:hidden"

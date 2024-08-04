@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-
 import { resend, audienceId, contactEmails } from '@/lib/constants';
-
 import { NewsLetterNotification, NewsletterConfirmation, NewsletterUnsubscribe } from "@/emails/Newsletter";
 
 // endpoint to sign up for the Zircon newsletter

@@ -8,21 +8,17 @@ import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { toast } from 'react-toastify';
-import XLogo from "@/public/x-logo.svg";
 
 export default function HeroSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   const [isSending, setIsSending] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
 
   const handleNewsletterSignup = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSending(true);
-
-    const form = event.target as HTMLFormElement;
-    const emailInput = form.email as HTMLInputElement;
-    const email = emailInput.value;
 
     if (!validateEmail(email)) {
       toast.error("Invalid email format");
@@ -51,10 +47,10 @@ export default function HeroSection() {
       }
     } catch (err) {
       console.error("Request failed:", err);
-      toast.error("An error occurred. Try again later.");
+      toast.error("Request failed.");
     } finally {
       setIsSending(false);
-      emailInput.value = '';
+      setEmail("");
     }
   };
 
@@ -72,7 +68,6 @@ export default function HeroSection() {
       >
         <TextShimmer className="inline-flex items-center justify-center">
           <span className="text-white/70">Follow us on</span>{" "}
-          {/* <XLogo /> */}
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256" className="w-[15px] ml-0.5"><g fill="#bbbbbb" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none"><g transform="scale(5.12,5.12)"><path d="M6.91992,6l14.2168,20.72656l-14.9082,17.27344h3.17773l13.13867,-15.22266l10.44141,15.22266h10.01367l-14.87695,-21.6875l14.08008,-16.3125h-3.17578l-12.31055,14.26172l-9.7832,-14.26172z"></path></g></g></svg>
           <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
         </TextShimmer>
@@ -85,10 +80,7 @@ export default function HeroSection() {
         Challenges, in-depth courses, and a weekly newsletter to
         <br className="hidden md:block" /> help you become the best Solana developer possible.
       </p>
-      <form
-        onSubmit={handleNewsletterSignup}
-        method="POST"
-        id="form"
+      <div
         className="flex gap-2 items-center justify-center ring-2 ring-white/20 h-14 px-1 rounded-lg max-w-md mx-auto translate-y-[-1rem] animate-fade-in opacity-0 ease-in-out [--animation-delay:600ms]"
       >
         <input
@@ -99,6 +91,7 @@ export default function HeroSection() {
           id="email"
           autoComplete="email"
           required
+          onChange={event => setEmail(event.target.value)}
         />
         <Button
           className="rounded-lg mr-1 text-white dark:text-black"
@@ -106,12 +99,13 @@ export default function HeroSection() {
           type="submit"
           disabled={isSending}
           // loading={isSending}
+          onClick={handleNewsletterSignup}
         >
           <span className="block sm:hidden">Newsletter</span>
           <span className="hidden sm:block">Join the newsletter</span>
           <ArrowRightIcon className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
         </Button>
-      </form>
+      </div>
       <div
         ref={ref}
         className="relative mt-[8rem] animate-fade-up opacity-0 [--animation-delay:400ms] [perspective:2000px] after:absolute after:inset-0 after:z-50 after:[background:linear-gradient(to_top,hsl(var(--background))_30%,transparent)]"

@@ -1,10 +1,11 @@
+"use client"
 import { Suspense, useEffect, useState } from "react";
 import type { Terminal as XTerm } from "@xterm/xterm";
 import { useWebContainer } from "@/lib/hooks/useWebContainer";
 import dynamic from "next/dynamic";
 
 const Terminal = dynamic(
-  () => import("@tutorialkit/components-react/core/Terminal")
+  async () => (await import("@tutorialkit/components-react/core/Terminal")).Terminal,
 );
 
 export default function BaseTerminal() {

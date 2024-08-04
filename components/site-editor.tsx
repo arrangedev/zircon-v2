@@ -28,8 +28,15 @@ import { parseFileExtension } from "@/lib/parse-file-extension";
 import { CommandMenu } from "./command-palette";
 
 export default function SiteEditor() {
-  const { document, files, onChange, onScroll, selectedFile, setSelectedFile } =
-    useSimpleEditor();
+  const {
+    changeDocuments,
+    document,
+    files,
+    onChange,
+    onScroll,
+    selectedFile,
+    setSelectedFile,
+  } = useSimpleEditor();
 
   return (
     <>
@@ -65,7 +72,7 @@ export default function SiteEditor() {
             </TooltipProvider>
           </div>
           <div className="">
-            <LanguageDropdown />
+            <LanguageDropdown setDocuments={changeDocuments} />
           </div>
         </div>
         <ResizablePanelGroup

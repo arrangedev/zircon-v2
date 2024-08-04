@@ -1,9 +1,34 @@
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-import { IconAnchor, IconBrandNodejs, IconBrandPython, IconBrandReact } from "@tabler/icons-react"
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { ANCHOR_FILES, DEFAULT_FILES } from "@/lib/default-files";
+import {
+  IconAnchor,
+  IconBrandNodejs,
+  IconBrandPython,
+  IconBrandReact,
+} from "@tabler/icons-react";
+import { EditorDocument } from "@tutorialkit/components-react/core";
 
-export function LanguageDropdown() {
+interface LanguageDropdownProps {
+  setDocuments: (documents: Record<string, EditorDocument>) => void;
+}
+
+export function LanguageDropdown({ setDocuments }: LanguageDropdownProps) {
+  function onValueChange(value: string) {
+    if (value === "node") {
+      setDocuments(DEFAULT_FILES);
+    } else if (value === "anchor") {
+      setDocuments(ANCHOR_FILES);
+    }
+  }
+
   return (
-    <Select defaultValue="node">
+    <Select onValueChange={(value) => onValueChange(value)} defaultValue="node">
       <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Select preset" />
       </SelectTrigger>
@@ -34,5 +59,5 @@ export function LanguageDropdown() {
         </SelectItem>
       </SelectContent>
     </Select>
-  )
+  );
 }

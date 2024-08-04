@@ -4,6 +4,7 @@ import type { Terminal as XTerm } from '@xterm/xterm';
 import { EditorDocument, EditorUpdate, ScrollPosition } from "@tutorialkit/components-react/core";
 import { useEffect, useState } from "react";
 import { useWebContainer } from './useWebContainer';
+import { set } from 'react-hook-form';
 
 export function useSimpleEditor() {
     const webcontainerPromise = useWebContainer();
@@ -32,6 +33,11 @@ export function useSimpleEditor() {
         await webcontainer.mount(toFileTree(DEFAULT_FILES));
       })();
     }, [isClient]);
+
+    function changeDocuments(documents: Record<string, EditorDocument>) {
+      setDocuments(documents);
+      setSelectedFile(Object.keys(documents)[0]);
+    }
   
     async function onChange({ content }: EditorUpdate) {
       setDocuments((prevDocuments) => ({
@@ -117,12 +123,13 @@ export function useSimpleEditor() {
       previewSrc,
       documents,
       setDocuments,
+      changeDocuments,
       selectedFile,
       setSelectedFile,
       onChange,
       onScroll,
       document,
-      files: FILE_PATHS,
+      files: Object.keys(documents),
     };
   }
   

@@ -172,7 +172,7 @@ export default function CallToAction() {
             </Marquee>
             <div className="absolute z-10">
               <div className="mx-auto size-24 rounded-[2rem] border bg-white/10 p-3 shadow-2xl backdrop-blur-md dark:bg-black/10 lg:size-32">
-                <IconCurrencySolana className="mx-auto size-16 text-black dark:text-white lg:size-24 stroke-1" />
+                <IconCurrencySolana className="mx-auto size-16 text-black dark:text-white lg:size-24 stroke-1 mt-1" />
               </div>
               <div className="z-10 mt-4 flex flex-col gap-y-2 items-center text-center text-primary">
                 <h1 className="pb-2 bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text text-5xl font-medium leading-none tracking-tighter text-transparent text-balance">

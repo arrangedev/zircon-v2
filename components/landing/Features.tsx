@@ -15,7 +15,7 @@ export default function Features() {
                             Escape tutorial hell. Forever.
                         </h2>
                         <p className="text-lg leading-8 text-gray-400 max-w-xl mx-auto">
-                            Zircon helps new and advanced developers hone their Solana skills 10x faster with curated instructional materal.
+                            Zircon helps new and advanced developers hone their Solana skills 10x faster with curated materials.
                         </p>
                     </div>
                     <dl className="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">

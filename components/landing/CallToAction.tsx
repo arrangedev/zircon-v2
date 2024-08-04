@@ -107,7 +107,7 @@ const Card = (card: { icon: JSX.Element; bg: JSX.Element }) => {
   );
 };
 
-export default function CallToActionSection() {
+export default function CallToAction() {
   const [randomTiles1, setRandomTiles1] = useState<typeof tiles>([]);
   const [randomTiles2, setRandomTiles2] = useState<typeof tiles>([]);
   const [randomTiles3, setRandomTiles3] = useState<typeof tiles>([]);

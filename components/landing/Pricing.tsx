@@ -78,7 +78,7 @@ const demoPrices = [
   },
 ];
 
-export default function PricingSection() {
+export default function Pricing() {
   const [interval, setInterval] = useState<Interval>("month");
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState<string | null>(null);

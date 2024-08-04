@@ -1,4 +1,4 @@
-export default function ClientSection() {
+export default function Clients() {
   return (
     <section
       id="clients"

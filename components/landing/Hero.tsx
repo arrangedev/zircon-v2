@@ -9,7 +9,7 @@ import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { toast } from 'react-toastify';
 
-export default function HeroSection() {
+export default function Hero() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 

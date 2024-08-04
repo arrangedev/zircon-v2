@@ -81,16 +81,6 @@ export default function SiteAside({ children }: { children: React.ReactNode }) {
         />
       ),
     },
-    {
-      label: "Logout",
-      href: "#",
-      icon: (
-        <IconArrowLeft
-          stroke={1}
-          className={`text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0`}
-        />
-      ),
-    },
   ];
 
   return (
@@ -122,11 +112,15 @@ export default function SiteAside({ children }: { children: React.ReactNode }) {
               <SidebarLink
                 className=""
                 link={{
-                  label: user?.user_metadata?.email,
+                  label: user.user_metadata.user_name ? user.user_metadata.user_name : user?.user_metadata?.email,
                   href: `/profile/${user?.user_metadata?.email}`,
                   icon: (
                     <Image
-                      src={getRandomAvatar(user?.user_metadata?.email)}
+                      src={
+                        user.user_metadata.avatar_url
+                          ? user.user_metadata.avatar_url
+                          : getRandomAvatar(user?.user_metadata?.email)
+                      }
                       className="h-7 w-7 flex-shrink-0 rounded-full"
                       width={50}
                       height={50}
@@ -138,7 +132,7 @@ export default function SiteAside({ children }: { children: React.ReactNode }) {
               <IconLogout
                 onClick={() => logout()}
                 stroke={1}
-                className={`text-neutral-700 dark:text-neutral-200 hover:text-neutral-300 h-5 w-5 ${
+                className={`text-zinc-500 hover:text-zinc-200 h-5 w-5 ${
                   !open && "hidden"
                 }`}
               />

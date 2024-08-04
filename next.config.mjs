@@ -7,6 +7,11 @@ const nextConfig = {
             hostname: 'avatar.vercel.sh',
             port: '',
           },
+          {
+            protocol: 'https',
+            hostname: 'avatars.githubusercontent.com',
+            port: '',
+          }
         ],
       },
 };

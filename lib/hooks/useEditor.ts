@@ -9,8 +9,8 @@ export function useSimpleEditor() {
     const webcontainerPromise = useWebContainer();
     const [isClient, setIsClient] = useState(false);
     const [terminal, setTerminal] = useState<XTerm | null>(null);
-    const [selectedFile, setSelectedFile] = useState('/src/index.js');
-    const [documents, setDocuments] = useState<Record<string, EditorDocument>>(FILES);
+    const [selectedFile, setSelectedFile] = useState('/src/index.ts');
+    const [documents, setDocuments] = useState<Record<string, EditorDocument>>(DEFAULT_FILES);
     const [previewSrc, setPreviewSrc] = useState<string>('');
   
     const document = documents[selectedFile];
@@ -29,7 +29,7 @@ export function useSimpleEditor() {
           setPreviewSrc(url);
         });
   
-        await webcontainer.mount(toFileTree(FILES));
+        await webcontainer.mount(toFileTree(DEFAULT_FILES));
       })();
     }, [isClient]);
   
@@ -115,6 +115,8 @@ export function useSimpleEditor() {
     return {
       setTerminal,
       previewSrc,
+      documents,
+      setDocuments,
       selectedFile,
       setSelectedFile,
       onChange,
@@ -124,9 +126,9 @@ export function useSimpleEditor() {
     };
   }
   
-  const FILES: Record<string, EditorDocument> = {
-    '/src/index.js': {
-      filePath: '/src/index.js',
+  const DEFAULT_FILES: Record<string, EditorDocument> = {
+    '/src/index.ts': {
+      filePath: '/src/index.ts',
       loading: false,
       value: stripIndent(`
         document.body.innerHTML = '<h1>Hello, world!</h1>';
@@ -171,16 +173,18 @@ export function useSimpleEditor() {
             "start": "servor src/ --reload"
           },
           "dependencies": {
-            "servor": "4.0.2"
+            "servor": "4.0.2",
+            "typescript": "^5.2.2",
+            "@sqds/multisig": "^2.1.2"
           }
         }
       `),
     },
   };
   
-  const FILE_PATHS = Object.keys(FILES);
+  const FILE_PATHS = Object.keys(DEFAULT_FILES);
   
-  function stripIndent(string: string) {
+  export function stripIndent(string: string) {
     const indent = minIndent(string.slice(1));
   
     if (indent === 0) {
@@ -192,7 +196,7 @@ export function useSimpleEditor() {
     return string.replace(regex, '').trim();
   }
   
-  function minIndent(string: string) {
+  export function minIndent(string: string) {
     const match = string.match(/^[ \t]*(?=\S)/gm);
   
     if (!match) {

@@ -174,8 +174,8 @@ export default function CallToAction() {
               <div className="mx-auto size-24 rounded-[2rem] border bg-white/10 p-3 shadow-2xl backdrop-blur-md dark:bg-black/10 lg:size-32">
                 <IconCurrencySolana className="mx-auto size-16 text-black dark:text-white lg:size-24 stroke-1" />
               </div>
-              <div className="z-10 mt-4 flex flex-col gap-y-2  items-center text-center text-primary">
-                <h1 className="text-3xl font-bold lg:text-4xl">
+              <div className="z-10 mt-4 flex flex-col gap-y-2 items-center text-center text-primary">
+                <h1 className="pb-2 bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text text-5xl font-medium leading-none tracking-tighter text-transparent text-balance">
                   Get your first win as a developer.
                 </h1>
                 <p className="mt-2 text-gray-400">
@@ -191,7 +191,7 @@ export default function CallToAction() {
                     "group mt-4 rounded-[2rem] px-6"
                   )}
                 >
-                  Get Started
+                  Get started
                   <ChevronRight className="ml-1 size-4 transition-all duration-300 ease-out group-hover:translate-x-1" />
                 </Link>
               </div>

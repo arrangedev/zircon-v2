@@ -11,7 +11,7 @@ export default function Features() {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:max-w-none">
                     <div className="text-center gap-y-2">
-                        <h2 className="bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance ">
+                        <h2 className="bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance">
                             Escape tutorial hell. Forever.
                         </h2>
                         <p className="text-lg leading-8 text-gray-400 max-w-xl mx-auto">

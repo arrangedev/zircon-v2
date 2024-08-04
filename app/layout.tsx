@@ -3,7 +3,10 @@ import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
+import { ToastContainer } from 'react-toastify';
+
 import "./globals.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -35,6 +38,10 @@ export default function RootLayout({
           {children}
           <Toaster />
         </ThemeProvider>
+        <ToastContainer
+          autoClose={5000}
+          closeOnClick
+        />
       </body>
     </html>
   );

@@ -29,7 +29,6 @@ import { CommandMenu } from "./command-palette";
 import { useState } from "react";
 
 export default function SiteEditor() {
-  const [preset, setPreset] = useState<string>("node");
   const {
     changeDocuments,
     document,
@@ -74,7 +73,7 @@ export default function SiteEditor() {
             </TooltipProvider>
           </div>
           <div className="">
-            <LanguageDropdown preset={preset} setDocuments={changeDocuments} />
+            <LanguageDropdown setDocuments={changeDocuments} />
           </div>
         </div>
         <ResizablePanelGroup

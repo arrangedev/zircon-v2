@@ -20,7 +20,7 @@ export default function BaseTerminal() {
     domLoaded && (
       <Suspense>
         <Terminal
-          className="h-32"
+          className="w-full h-full"
           readonly={false}
           theme={`dark`}
           onTerminalReady={setTerminal}

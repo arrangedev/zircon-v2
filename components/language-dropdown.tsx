@@ -15,10 +15,11 @@ import {
 import { EditorDocument } from "@tutorialkit/components-react/core";
 
 interface LanguageDropdownProps {
+  preset: string;
   setDocuments: (documents: Record<string, EditorDocument>) => void;
 }
 
-export function LanguageDropdown({ setDocuments }: LanguageDropdownProps) {
+export function LanguageDropdown({ preset,setDocuments }: LanguageDropdownProps) {
   function onValueChange(value: string) {
     if (value === "node") {
       setDocuments(DEFAULT_FILES);
@@ -28,7 +29,7 @@ export function LanguageDropdown({ setDocuments }: LanguageDropdownProps) {
   }
 
   return (
-    <Select onValueChange={(value) => onValueChange(value)} defaultValue="node">
+    <Select value={preset} onValueChange={(value) => onValueChange(value)} defaultValue="node">
       <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Select preset" />
       </SelectTrigger>

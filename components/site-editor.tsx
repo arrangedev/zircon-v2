@@ -26,8 +26,10 @@ import { LanguageDropdown } from "./language-dropdown";
 import { mapExtensionToLang } from "@/lib/map-extension-to-lang";
 import { parseFileExtension } from "@/lib/parse-file-extension";
 import { CommandMenu } from "./command-palette";
+import { useState } from "react";
 
 export default function SiteEditor() {
+  const [preset, setPreset] = useState<string>("node");
   const {
     changeDocuments,
     document,
@@ -72,7 +74,7 @@ export default function SiteEditor() {
             </TooltipProvider>
           </div>
           <div className="">
-            <LanguageDropdown setDocuments={changeDocuments} />
+            <LanguageDropdown preset={preset} setDocuments={changeDocuments} />
           </div>
         </div>
         <ResizablePanelGroup

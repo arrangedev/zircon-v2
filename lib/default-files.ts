@@ -104,8 +104,8 @@ export const ANCHOR_FILES: Record<string, EditorDocument> = {
     anchor-lang = { version = "0.28.0", features = ["init-if-needed"] }
       `),
   },
-  "/programs/program/Xargo.toml": {
-    filePath: "/programs/program/Xargo.toml",
+  "/programs/zircon/Xargo.toml": {
+    filePath: "/programs/zircon/Xargo.toml",
     loading: false,
     value: stripIndent(`
     [target.bpfel-unknown-unknown.dependencies.std]

@@ -6,36 +6,31 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import clsx from 'clsx'
 
 import Container from '@/components/ui/Container'
-// import backgroundImage from '@/images/background-features.jpg'
-// import screenshotExpenses from '@/images/screenshots/expenses.png'
-// import screenshotPayroll from '@/images/screenshots/payroll.png'
-// import screenshotReporting from '@/images/screenshots/reporting.png'
-// import screenshotVatReturns from '@/images/screenshots/vat-returns.png'
 
 const features = [
     {
         title: 'Solana Leet Code',
         description:
             "Flex your Solana development skills with progressively problem sets designed to push you to the limits.",
-        // image: screenshotPayroll,
+        // image: ,
     },
     {
         title: 'Curated Courses',
         description:
             "Learn how to interact with widely used SDKs and development tools through guided courses.",
-        // image: screenshotExpenses,
+        // image: ,
     },
     {
         title: 'Shareable Code Snippets',
         description:
             "For the first time, write and share code snippets of Solana programs with your team for quick and easy collaboration.",
-        // image: screenshotVatReturns,
+        // image: ,
     },
     {
         title: 'Weekly Newsletter',
         description:
             'Stay in touch with the latest in Solana development with a weekly newsletter.',
-        // image: screenshotReporting,
+        // image: ,
     },
 ]
 
@@ -65,14 +60,6 @@ export default function Features() {
             aria-label="Features for running your books"
             className="relative overflow-hidden pb-28 pt-20 sm:py-32"
         >
-            {/* <Image
-        className="absolute left-1/2 top-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
-        src={backgroundImage}
-        alt=""
-        width={2245}
-        height={1636}
-        unoptimized
-      /> */}
             <Container className="relative">
                 <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
                     <h2 className="bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance">

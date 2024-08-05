@@ -176,10 +176,10 @@ export default function CallToAction() {
               </div>
               <div className="z-10 mt-4 flex flex-col gap-y-2 items-center text-center text-primary">
                 <h1 className="pb-2 bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text text-5xl font-medium leading-none tracking-tighter text-transparent text-balance">
-                  Get your first win as a developer.
+                  Stop chewing glass. Learn with Zircon.
                 </h1>
                 <p className="mt-2 text-gray-400">
-                  Sign up for free and start shipping on Solana.
+                  Sign up for free and start learning today!
                 </p>
                 <Link
                   href="#"

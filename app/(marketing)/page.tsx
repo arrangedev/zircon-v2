@@ -3,6 +3,7 @@ import CallToAction from "@/components/landing/CallToAction";
 import Hero from "@/components/landing/Hero";
 import Stats from "@/components/landing/Stats";
 import Features from "@/components/landing/Features";
+import Testimonials from "@/components/landing/Testimonials";
 
 import Particles from "@/components/magicui/particles";
 import { SphereMask } from "@/components/magicui/sphere-mask";
@@ -15,6 +16,7 @@ export default async function Page() {
       <SphereMask />
       <Features />
       {/* <Stats /> */}
+      <Testimonials />
       <CallToAction />
       <Particles
         className="absolute inset-0 -z-10"

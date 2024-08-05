@@ -18,15 +18,15 @@ import { useEffect, useId, useRef, useState } from "react";
 
 const tiles = [
   {
-    icon: <Code className="size-full stroke-1" />,
+    icon: <Code className="size-full stroke-1 text-pink-200/30" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-70 blur-[20px] filter"></div>
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-50 blur-[20px] filter"></div>
     ),
   },
   {
-    icon: <Globe className="size-full stroke-1" />,
+    icon: <Globe className="size-full stroke-1 text-pink-200/30" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-70 blur-[20px] filter"></div>
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-50 blur-[20px] filter"></div>
     ),
   },
   // {
@@ -36,15 +36,15 @@ const tiles = [
   //   ),
   // },
   {
-    icon: <IconCurrencySolana className="size-full stroke-1" />,
+    icon: <IconCurrencySolana className="size-full stroke-1 text-pink-200/30" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-70 blur-[20px] filter"></div>
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-50 blur-[20px] filter"></div>
     ),
   },
   {
-    icon: <Coins className="size-full stroke-1" />,
+    icon: <Coins className="size-full stroke-1 text-pink-200/30" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-70 blur-[20px] filter"></div>
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-50 blur-[20px] filter"></div>
     ),
   },
   // {

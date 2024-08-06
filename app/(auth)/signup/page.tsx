@@ -6,8 +6,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Sign Up | Magic UI",
-  description: "Sign Up for Magic UI",
+  title: "Sign Up | Zircon",
+  description: "Sign Up for Zircon",
 };
 
 export default function SignUpPage() {

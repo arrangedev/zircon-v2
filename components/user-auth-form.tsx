@@ -1,5 +1,6 @@
 "use client";
 
+import { login, loginWithGithub } from "@/app/(auth)/login/actions";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Form,
@@ -36,12 +37,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   });
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false);
+  const [isTwitterLoading, setIsTwitterLoading] = React.useState<boolean>(false);
 
   async function onSubmit(data: FormData) {
     setIsLoading(true);
 
-    // TODO: Add signin using preferred provider
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await login(data.email);
 
     const signInResult = { ok: true };
     setIsLoading(false);
@@ -59,9 +60,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   async function onSignInGithub() {
     setIsGitHubLoading(true);
-    // TODO: Add signin using preferred provider
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsGitHubLoading(false);
+
+    await loginWithGithub();
   }
 
   return (
@@ -123,7 +123,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         onClick={() => {
           onSignInGithub();
         }}
-        disabled={isLoading || isGitHubLoading}
+        disabled={isLoading || isGitHubLoading || isTwitterLoading}
       >
         {isGitHubLoading ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -138,9 +138,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         onClick={() => {
           onSignInGithub();
         }}
-        disabled={isLoading || isGitHubLoading}
+        disabled={isLoading || isTwitterLoading || isGitHubLoading}
       >
-        {isGitHubLoading ? (
+        {isTwitterLoading ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <IconBrandX className="mr-2 h-4 w-4" />

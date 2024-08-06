@@ -4,13 +4,14 @@ import type { Terminal as XTerm } from '@xterm/xterm';
 import { EditorDocument, EditorUpdate, ScrollPosition } from "@tutorialkit/components-react/core";
 import { useEffect, useState } from "react";
 import { useWebContainer } from './useWebContainer';
+import { set } from 'react-hook-form';
 
 export function useSimpleEditor() {
     const webcontainerPromise = useWebContainer();
     const [isClient, setIsClient] = useState(false);
     const [terminal, setTerminal] = useState<XTerm | null>(null);
-    const [selectedFile, setSelectedFile] = useState('/src/index.js');
-    const [documents, setDocuments] = useState<Record<string, EditorDocument>>(FILES);
+    const [selectedFile, setSelectedFile] = useState('/src/index.ts');
+    const [documents, setDocuments] = useState<Record<string, EditorDocument>>(DEFAULT_FILES);
     const [previewSrc, setPreviewSrc] = useState<string>('');
   
     const document = documents[selectedFile];
@@ -26,12 +27,41 @@ export function useSimpleEditor() {
         const webcontainer = await webcontainerPromise;
   
         webcontainer.on('server-ready', (_port, url) => {
+          console.log(url)
           setPreviewSrc(url);
         });
+
+        console.log(previewSrc)
   
-        await webcontainer.mount(toFileTree(FILES));
+        await webcontainer.mount(toFileTree(DEFAULT_FILES));
       })();
     }, [isClient]);
+
+    function changeDocuments(documents: Record<string, EditorDocument>) {
+      setDocuments(documents);
+      setSelectedFile(Object.keys(documents)[0]);
+    }
+
+    // Function to add a new file to the file tree and web container
+    async function addFile(fileName: string) {
+      // Determine what the file path should be based on the selected file, with filename as input
+      const selectedFilePath = selectedFile.split("/").slice(0, -1).join("/");
+      const newFilePath = `${selectedFilePath}/${fileName}`;
+
+      // Create a new file with the given file path
+      changeDocuments({
+        ...documents,
+        [newFilePath]: {
+          filePath: newFilePath,
+          loading: false,
+          value: "",
+        },
+      });
+
+      // Write the file to the web container
+      const webcontainer = await webcontainerPromise;
+      await webcontainer.fs.writeFile(newFilePath, "");
+    }
   
     async function onChange({ content }: EditorUpdate) {
       setDocuments((prevDocuments) => ({
@@ -107,7 +137,7 @@ export function useSimpleEditor() {
         });
   
         await jshReady;
-  
+        
         shellWriter.write('npm install && npm start\n');
       }
     }, [terminal]);
@@ -115,18 +145,22 @@ export function useSimpleEditor() {
     return {
       setTerminal,
       previewSrc,
+      documents,
+      setDocuments,
+      changeDocuments,
       selectedFile,
       setSelectedFile,
+      addFile,
       onChange,
       onScroll,
       document,
-      files: FILE_PATHS,
+      files: Object.keys(documents),
     };
   }
   
-  const FILES: Record<string, EditorDocument> = {
-    '/src/index.js': {
-      filePath: '/src/index.js',
+  const DEFAULT_FILES: Record<string, EditorDocument> = {
+    '/src/index.ts': {
+      filePath: '/src/index.ts',
       loading: false,
       value: stripIndent(`
         document.body.innerHTML = '<h1>Hello, world!</h1>';
@@ -171,16 +205,18 @@ export function useSimpleEditor() {
             "start": "servor src/ --reload"
           },
           "dependencies": {
-            "servor": "4.0.2"
+            "servor": "4.0.2",
+            "typescript": "^5.2.2",
+            "@sqds/multisig": "^2.1.2"
           }
         }
       `),
     },
   };
   
-  const FILE_PATHS = Object.keys(FILES);
+  const FILE_PATHS = Object.keys(DEFAULT_FILES);
   
-  function stripIndent(string: string) {
+  export function stripIndent(string: string) {
     const indent = minIndent(string.slice(1));
   
     if (indent === 0) {
@@ -192,7 +228,7 @@ export function useSimpleEditor() {
     return string.replace(regex, '').trim();
   }
   
-  function minIndent(string: string) {
+  export function minIndent(string: string) {
     const match = string.match(/^[ \t]*(?=\S)/gm);
   
     if (!match) {

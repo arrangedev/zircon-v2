@@ -3,57 +3,27 @@
 import type {
   EditorDocument,
   EditorUpdate,
+  OnChangeCallback,
   ScrollPosition,
 } from "@tutorialkit/components-react/core";
 import CodeMirrorEditor from "@tutorialkit/components-react/core/CodeMirrorEditor";
-import { useState } from "react";
-import { Theme } from "@tutorialkit/components-react";
 
-export default function Editor() {
-  const { editorDocument, theme, onChange, onScroll } = useEditorDocument();
+interface BaseEditorProps {
+  doc?: EditorDocument;
+  onChange?: OnChangeCallback;
+  onScroll?: (scroll: ScrollPosition) => void;
+}
 
+export default function BaseEditor({ doc, onChange, onScroll }: BaseEditorProps) {
   return (
     <CodeMirrorEditor
-      theme={theme}
-      doc={editorDocument}
+      theme={`dark`}
+      doc={doc}
       onChange={onChange}
       onScroll={onScroll}
       debounceChange={500}
       debounceScroll={500}
-      className="h-full text-sm"
+      className="h-full text-sm w-[100%] bg-zinc-950"
     />
   );
 }
-
-function useEditorDocument() {
-  let theme = "dark" as Theme;
-  const [editorDocument, setEditorDocument] =
-    useState<EditorDocument>(DEFAULT_DOCUMENT);
-
-  function onChange({ content }: EditorUpdate) {
-    setEditorDocument((prev) => ({
-      ...prev,
-      value: content,
-    }));
-  }
-
-  function onScroll(scroll: ScrollPosition) {
-    setEditorDocument((prev) => ({
-      ...prev,
-      scroll,
-    }));
-  }
-
-  return {
-    theme,
-    editorDocument,
-    onChange,
-    onScroll,
-  };
-}
-
-const DEFAULT_DOCUMENT: EditorDocument = {
-  filePath: "index.js",
-  loading: false,
-  value: 'function hello() {\n  console.log("Hello, world!");\n}\n\nhello();',
-};

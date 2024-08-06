@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.2",
     "@hookform/resolvers": "^3.3.4",
     "@nanostores/react": "^0.7.2",
     "@radix-ui/react-avatar": "^1.1.0",
@@ -21,6 +22,7 @@
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
+    "@react-email/components": "^0.0.22",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/ssr": "^0.4.0",
@@ -41,6 +43,8 @@
     "react": "^18.2.0",
     "react-dom": "^18",
     "react-hook-form": "^7.51.3",
+    "react-toastify": "^10.0.5",
+    "resend": "^3.5.0",
     "react-resizable-panels": "^2.0.22",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.2.2",

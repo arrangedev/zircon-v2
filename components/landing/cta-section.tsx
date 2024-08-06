@@ -18,41 +18,41 @@ import { useEffect, useId, useRef, useState } from "react";
 
 const tiles = [
   {
-    icon: <Code className="size-full" />,
+    icon: <Code className="size-full stroke-1 text-pink-200/30" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-orange-600 via-rose-600 to-violet-600 opacity-70 blur-[20px] filter"></div>
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-50 blur-[20px] filter"></div>
     ),
   },
   {
-    icon: <Globe className="size-full" />,
+    icon: <Globe className="size-full stroke-1 text-pink-200/30" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 opacity-70 blur-[20px] filter"></div>
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-50 blur-[20px] filter"></div>
+    ),
+  },
+  // {
+  //   icon: <File className="size-full stroke-1" />,
+  //   bg: (
+  //     <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-green-500 via-teal-500 to-emerald-600 opacity-70 blur-[20px] filter"></div>
+  //   ),
+  // },
+  {
+    icon: <IconCurrencySolana className="size-full stroke-1 text-pink-200/30" />,
+    bg: (
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-50 blur-[20px] filter"></div>
     ),
   },
   {
-    icon: <File className="size-full" />,
+    icon: <Coins className="size-full stroke-1 text-pink-200/30" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-green-500 via-teal-500 to-emerald-600 opacity-70 blur-[20px] filter"></div>
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-indigo-200 via-pink-300 to-violet-200 opacity-50 blur-[20px] filter"></div>
     ),
   },
-  {
-    icon: <IconCurrencySolana className="size-full" />,
-    bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-600 opacity-70 blur-[20px] filter"></div>
-    ),
-  },
-  {
-    icon: <Coins className="size-full" />,
-    bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-orange-600 via-rose-600 to-violet-600 opacity-70 blur-[20px] filter"></div>
-    ),
-  },
-  {
-    icon: <KeyboardIcon className="size-full" />,
-    bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-gray-600 via-gray-500 to-gray-400 opacity-70 blur-[20px] filter"></div>
-    ),
-  },
+  // {
+  //   icon: <KeyboardIcon className="size-full stroke-1" />,
+  //   bg: (
+  //     <div className="pointer-events-none absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-gray-600 via-gray-500 to-gray-400 opacity-70 blur-[20px] filter"></div>
+  //   ),
+  // },
 ];
 
 const shuffleArray = (array: any[]) => {
@@ -107,7 +107,7 @@ const Card = (card: { icon: JSX.Element; bg: JSX.Element }) => {
   );
 };
 
-export default function CallToActionSection() {
+export default function CallToAction() {
   const [randomTiles1, setRandomTiles1] = useState<typeof tiles>([]);
   const [randomTiles2, setRandomTiles2] = useState<typeof tiles>([]);
   const [randomTiles3, setRandomTiles3] = useState<typeof tiles>([]);
@@ -172,14 +172,14 @@ export default function CallToActionSection() {
             </Marquee>
             <div className="absolute z-10">
               <div className="mx-auto size-24 rounded-[2rem] border bg-white/10 p-3 shadow-2xl backdrop-blur-md dark:bg-black/10 lg:size-32">
-                <IconCurrencySolana className="mx-auto size-16 text-black dark:text-white lg:size-24" />
+                <IconCurrencySolana className="mx-auto size-16 text-black dark:text-white lg:size-24 stroke-1 mt-1" />
               </div>
-              <div className="z-10 mt-4 flex flex-col items-center text-center text-primary">
-                <h1 className="text-3xl font-bold lg:text-4xl">
-                  Get your first win as a developer.
+              <div className="z-10 mt-4 flex flex-col gap-y-2 items-center text-center text-primary">
+                <h1 className="pb-2 bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text text-5xl font-medium leading-none tracking-tighter text-transparent text-balance">
+                  Stop chewing glass. Learn with Zircon.
                 </h1>
-                <p className="mt-2">
-                  Sign up for free, and start shipping on Solana.
+                <p className="mt-2 text-gray-400">
+                  Sign up for free and start learning today!
                 </p>
                 <Link
                   href="#"
@@ -191,7 +191,7 @@ export default function CallToActionSection() {
                     "group mt-4 rounded-[2rem] px-6"
                   )}
                 >
-                  Get Started
+                  Get started
                   <ChevronRight className="ml-1 size-4 transition-all duration-300 ease-out group-hover:translate-x-1" />
                 </Link>
               </div>

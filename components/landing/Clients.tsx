@@ -1,4 +1,4 @@
-export default function ClientSection() {
+export default function Clients() {
   return (
     <section
       id="clients"
@@ -6,40 +6,27 @@ export default function ClientSection() {
     >
       <div className="py-14">
         <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-          <h2 className="text-center text-sm font-semibold text-gray-600">
-            IN PARTNERSHIP WITH TOP TEAMS ON SOLANA
+          <h2 className="text-center text-sm font-semibold text-gray-400 uppercase">
+            Zircon users go on to work at the best startups
           </h2>
           <div className="mt-6">
             <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:gap-x-16 [&_path]:fill-white">
               <li>
                 <img
                   src={`/turbine-logo-text-white.svg`}
-                  className="h-8 w-28 px-2 dark:brightness-0 dark:invert"
+                  className="h-8 w-36 px-2 dark:brightness-0 dark:invert"
                 />
               </li>
               <li>
                 <img
                   src={`/metaplex-logo.png`}
-                  className="w-28 px-2 dark:brightness-0 dark:invert"
+                  className="w-48 px-2 dark:brightness-0 dark:invert"
                 />
               </li>
               <li>
                 <img
                   src={`/squads-logo.svg`}
-                  className="h-8 w-28 px-2 dark:brightness-0 dark:invert"
-                />
-              </li>
-
-              <li>
-                <img
-                  src={`https://cdn.magicui.design/companies/Uber.svg`}
-                  className="h-8 w-28 px-2 dark:brightness-0 dark:invert"
-                />
-              </li>
-              <li>
-                <img
-                  src={`https://cdn.magicui.design/companies/Notion.svg`}
-                  className="h-8 w-28 px-2 dark:brightness-0 dark:invert"
+                  className="h-8 w-36 px-2 dark:brightness-0 dark:invert"
                 />
               </li>
             </ul>

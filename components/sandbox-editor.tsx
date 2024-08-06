@@ -1,5 +1,4 @@
 "use client";
-
 import { motion } from "framer-motion";
 import BaseEditor from "./ui/editor";
 import BaseFileTree from "./ui/file-tree";
@@ -13,23 +12,19 @@ import { useSimpleEditor } from "@/lib/hooks/useEditor";
 import {
   IconFilePlus,
   IconFolderPlus,
-  IconHelpCircleFilled,
-  IconSandbox,
 } from "@tabler/icons-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
-import { LanguageDropdown } from "./language-dropdown";
 import { mapExtensionToLang } from "@/lib/map-extension-to-lang";
 import { parseFileExtension } from "@/lib/parse-file-extension";
-import { CommandMenu } from "./command-palette";
+import { CommandMenu } from "./ui/command-palette";
 import { useState } from "react";
+import ModeHeader from "./ui/mode-header";
+import BasePreview from "./ui/preview";
+import SandboxEditorHeader from "./ui/sandbox/sb-editor-header";
 
-export default function SiteEditor() {
+export default function SandboxEditor() {
+  const [mode, setMode] = useState<"preview" | "terminal">("terminal");
   const {
+    previewSrc,
     changeDocuments,
     document,
     files,
@@ -38,6 +33,14 @@ export default function SiteEditor() {
     selectedFile,
     setSelectedFile,
   } = useSimpleEditor();
+
+  function onModeChange() {
+    if (mode === "preview") {
+      setMode("terminal");
+    } else {
+      setMode("preview");
+    }
+  }
 
   return (
     <>
@@ -52,30 +55,7 @@ export default function SiteEditor() {
         }}
         className="h-full"
       >
-        <div className="p-2 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <IconSandbox className="h-6 w-6 text-[#FF25CF]/75" />
-            <h1 className="text-xl font-semibold bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text text-transparent">
-              Sandbox
-            </h1>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <IconHelpCircleFilled className="h-3 w-3 text-zinc-500" />
-                </TooltipTrigger>
-                <TooltipContent className="w-36 bg-black text-zinc-500">
-                  <p>
-                    Build with Solana, run it in browser, and share it with the
-                    world.
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <div className="">
-            <LanguageDropdown setDocuments={changeDocuments} />
-          </div>
-        </div>
+        <SandboxEditorHeader changeDocuments={changeDocuments} />
         <ResizablePanelGroup
           direction="horizontal"
           className="w-full h-full border border-[var(--border)]/25"
@@ -84,6 +64,9 @@ export default function SiteEditor() {
             <div className="flex gap-2 items-center justify-end border-b border-[var(--border)]/25 p-1">
               <IconFilePlus
                 stroke={1}
+                onClick={() => {
+                  // Add inject the add-file component in the corresponding location in the file tree
+                }}
                 className="h-5 w-5 text-zinc-500 hover:text-zinc-200"
               />
               <IconFolderPlus
@@ -102,7 +85,7 @@ export default function SiteEditor() {
           <ResizableHandle />
           <ResizablePanel defaultSize={80}>
             <ResizablePanelGroup direction="vertical">
-              <ResizablePanel defaultSize={70}>
+              <ResizablePanel defaultSize={60}>
                 <div className="flex-grow h-full relative">
                   <BaseEditor
                     doc={document}
@@ -113,9 +96,14 @@ export default function SiteEditor() {
                 </div>
               </ResizablePanel>
               <ResizableHandle />
-              <ResizablePanel defaultSize={30}>
-                <div className="w-1/2 h-full p-2">
-                  <BaseTerminal />
+              <ResizablePanel defaultSize={40}>
+                <ModeHeader mode={mode} onModeChange={onModeChange} />
+                <div className="w-full h-48 p-2">
+                  {mode === "preview" ? (
+                    <BasePreview previewSrc={previewSrc} />
+                  ) : (
+                    <BaseTerminal />
+                  )}
                 </div>
               </ResizablePanel>
             </ResizablePanelGroup>

@@ -10,8 +10,12 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 export const metadata: Metadata = {
-  title: "Zircon",
-  description: "The Solana developer dojo.",
+  title: "Zircon | The Solana Developer Dojo",
+  description:
+    "Start building on Solana in minutes with guided courses, and challenges for all skillsets.",
+  icons: {
+    icon: "/icon.ico",
+  },
 };
 
 export default function RootLayout({

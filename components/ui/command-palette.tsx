@@ -6,7 +6,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "./ui/command";
+} from "./command";
 import { IconNews, IconRun, IconShare } from "@tabler/icons-react";
 
 export function CommandMenu() {

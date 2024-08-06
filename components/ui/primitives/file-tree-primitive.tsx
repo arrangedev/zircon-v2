@@ -136,7 +136,7 @@ interface FolderProps {
   icon: ReactNode;
 }
 
-function Folder({
+export function Folder({
   folder: { depth, name },
   collapsed,
   onClick,
@@ -166,7 +166,7 @@ interface FileProps {
   icon: ReactNode;
 }
 
-function File({ file: { depth, name, fullPath }, onClick, selected, icon }: FileProps) {
+export function File({ file: { depth, name, fullPath }, onClick, selected, icon }: FileProps) {
   return (
     <div className="flex items-center gap-2">
       <NodeButton

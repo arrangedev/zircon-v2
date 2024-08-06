@@ -27,8 +27,11 @@ export function useSimpleEditor() {
         const webcontainer = await webcontainerPromise;
   
         webcontainer.on('server-ready', (_port, url) => {
+          console.log(url)
           setPreviewSrc(url);
         });
+
+        console.log(previewSrc)
   
         await webcontainer.mount(toFileTree(DEFAULT_FILES));
       })();
@@ -37,6 +40,27 @@ export function useSimpleEditor() {
     function changeDocuments(documents: Record<string, EditorDocument>) {
       setDocuments(documents);
       setSelectedFile(Object.keys(documents)[0]);
+    }
+
+    // Function to add a new file to the file tree and web container
+    async function addFile(fileName: string) {
+      // Determine what the file path should be based on the selected file, with filename as input
+      const selectedFilePath = selectedFile.split("/").slice(0, -1).join("/");
+      const newFilePath = `${selectedFilePath}/${fileName}`;
+
+      // Create a new file with the given file path
+      changeDocuments({
+        ...documents,
+        [newFilePath]: {
+          filePath: newFilePath,
+          loading: false,
+          value: "",
+        },
+      });
+
+      // Write the file to the web container
+      const webcontainer = await webcontainerPromise;
+      await webcontainer.fs.writeFile(newFilePath, "");
     }
   
     async function onChange({ content }: EditorUpdate) {
@@ -113,7 +137,7 @@ export function useSimpleEditor() {
         });
   
         await jshReady;
-  
+        
         shellWriter.write('npm install && npm start\n');
       }
     }, [terminal]);
@@ -126,6 +150,7 @@ export function useSimpleEditor() {
       changeDocuments,
       selectedFile,
       setSelectedFile,
+      addFile,
       onChange,
       onScroll,
       document,

@@ -14,7 +14,7 @@ export function useWebContainer() {
     if (!webcontainerBooting) {
       webcontainerBooting = true;
 
-      WebContainer.boot({ workdirName: 'example' }).then((webcontainer) => {
+      WebContainer.boot({ workdirName: 'zircon' }).then((webcontainer) => {
         resolve(webcontainer);
       });
     }

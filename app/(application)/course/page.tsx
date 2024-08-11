@@ -1,11 +1,16 @@
-import { SiteBanner } from "@/components/site-banner";
-import ExampleCodeMirrorEditor from "@/components/ui/editor";
-import { CodeMirrorEditor } from "@tutorialkit/components-react/core";
+import CourseWrapper from "@/components/course-wrapper";
+import { Metadata } from "next";
 
-export default async function Page() {
+export const metadata: Metadata = {
+  title: "Course | Zircon",
+  description:
+    "Discover courses and tutorials to help you learn to build on Solana.",
+};
+
+export default function Page() {
   return (
-    <div className="p-12">
-      <ExampleCodeMirrorEditor />
-    </div>
+    <>
+      <CourseWrapper />
+    </>
   );
 }

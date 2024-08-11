@@ -9,10 +9,7 @@ import {
 } from "./ui/resizable";
 import BaseTerminal from "./ui/terminal";
 import { useSimpleEditor } from "@/lib/hooks/useEditor";
-import {
-  IconFilePlus,
-  IconFolderPlus,
-} from "@tabler/icons-react";
+import { IconFilePlus, IconFolderPlus } from "@tabler/icons-react";
 import { mapExtensionToLang } from "@/lib/map-extension-to-lang";
 import { parseFileExtension } from "@/lib/parse-file-extension";
 import { CommandMenu } from "./ui/command-palette";
@@ -97,13 +94,28 @@ export default function SandboxEditor() {
               </ResizablePanel>
               <ResizableHandle />
               <ResizablePanel defaultSize={40}>
-                <ModeHeader mode={mode} onModeChange={onModeChange} />
-                <div className="w-full h-48 p-2">
-                  {mode === "preview" ? (
-                    <BasePreview previewSrc={previewSrc} />
-                  ) : (
+                {/*
+                <ResizablePanelGroup
+                  direction="horizontal"
+                  className="w-full h-56 border border-[var(--border)]/25"
+                >
+                  <ResizablePanel defaultSize={80}>
                     <BaseTerminal />
-                  )}
+                  </ResizablePanel>
+                  <ResizableHandle />
+                  <ResizablePanel defaultSize={20}>
+                    <BasePreview previewSrc={previewSrc} />
+                  </ResizablePanel>
+                  </ResizablePanelGroup>
+              */}
+                <ModeHeader mode={mode} onModeChange={onModeChange} />
+                <div className="w-full h-64">
+                  <div className={mode === "preview" ? "block h-full" : "hidden"}>
+                    <BasePreview previewSrc={previewSrc} />
+                  </div>
+                  <div className={mode === "terminal" ? "block p-2 h-full" : "hidden"}>
+                    <BaseTerminal />
+                  </div>
                 </div>
               </ResizablePanel>
             </ResizablePanelGroup>

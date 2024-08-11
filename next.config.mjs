@@ -12,6 +12,11 @@ const nextConfig = {
         hostname: "avatars.githubusercontent.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "assets.aceternity.com",
+        port: "",
+      },
     ],
   },
   async headers() {

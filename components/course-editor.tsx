@@ -10,7 +10,7 @@ import {
 import BaseTerminal from "./ui/terminal";
 import { useSimpleEditor } from "@/lib/hooks/useEditor";
 import {
-    IconCurrencySolana,
+  IconCurrencySolana,
   IconFilePlus,
   IconFolderPlus,
   IconHelpCircleFilled,
@@ -22,21 +22,25 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
-import { LanguageDropdown } from "./ui/language-dropdown";
 import { mapExtensionToLang } from "@/lib/map-extension-to-lang";
 import { parseFileExtension } from "@/lib/parse-file-extension";
 import { CommandMenu } from "./ui/command-palette";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModeHeader from "./ui/mode-header";
 import BasePreview from "./ui/preview";
 import { CourseProgress } from "./ui/course-progress";
+import { marked } from "marked";
 
 interface CourseEditorProps {
-    progress: number
-    setProgress: React.Dispatch<React.SetStateAction<number>>
+  progress: number;
+  setProgress: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function CourseEditor({ progress, setProgress }: CourseEditorProps) {
+export default function CourseEditor({
+  progress,
+  setProgress,
+}: CourseEditorProps) {
+  const [content, setContent] = useState<any>("");
   const [mode, setMode] = useState<"preview" | "terminal">("terminal");
   const {
     previewSrc,
@@ -48,6 +52,15 @@ export default function CourseEditor({ progress, setProgress }: CourseEditorProp
     selectedFile,
     setSelectedFile,
   } = useSimpleEditor();
+
+  useEffect(() => {
+    const getMd = async () => {
+      const response = await fetch("/intro.md");
+      const data = await response.text();
+      setContent(await marked(data));
+    };
+    getMd();
+  }, []);
 
   function onModeChange() {
     if (mode === "preview") {
@@ -74,7 +87,7 @@ export default function CourseEditor({ progress, setProgress }: CourseEditorProp
           <div className="flex items-center gap-2">
             <IconCurrencySolana className="h-6 w-6 text-[#FF25CF]/75" />
             <h1 className="text-xl font-semibold bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text text-transparent">
-              Intro to Solana
+              Sample Course
             </h1>
             <TooltipProvider>
               <Tooltip>
@@ -83,7 +96,8 @@ export default function CourseEditor({ progress, setProgress }: CourseEditorProp
                 </TooltipTrigger>
                 <TooltipContent className="w-36 bg-black text-zinc-300">
                   <p>
-                    Let's build a simple Solana app in 15 minutes using Typescript & React!
+                    Let's build a simple Solana app in 15 minutes using
+                    Typescript & React!
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -98,8 +112,13 @@ export default function CourseEditor({ progress, setProgress }: CourseEditorProp
           className="w-full h-full border border-[var(--border)]/25"
         >
           <ResizablePanel defaultSize={40} minSize={25}>
-            <div className="flex-grow h-full relative">
-              <p className="text-xs font-regular text-white">Hello</p>
+            <div className="flex-grow h-full relative p-2">
+              {content && (
+                <article
+                  className="prose prose-zinc lg:prose-lg dark:prose-headings:text-zinc-100 prose-h1:text-2xl prose-h2:text-xl prose-p:text-zinc-300 dark:prose-p:font-light prose-li:text-zinc-300 prose-ol:text-zinc-300 prose-a:text-pink-400 prose-code:text-pink-400"
+                  dangerouslySetInnerHTML={{ __html: content }}
+                />
+              )}
             </div>
           </ResizablePanel>
           <ResizableHandle />
@@ -132,12 +151,19 @@ export default function CourseEditor({ progress, setProgress }: CourseEditorProp
               <ResizableHandle />
               <ResizablePanel defaultSize={40} minSize={30}>
                 <ModeHeader mode={mode} onModeChange={onModeChange} />
-                <div className="w-full h-48 p-2">
-                  {mode === "preview" ? (
+                <div className="w-full h-64">
+                  <div
+                    className={mode === "preview" ? "block h-full" : "hidden"}
+                  >
                     <BasePreview previewSrc={previewSrc} />
-                  ) : (
+                  </div>
+                  <div
+                    className={
+                      mode === "terminal" ? "block p-2 h-full" : "hidden"
+                    }
+                  >
                     <BaseTerminal />
-                  )}
+                  </div>
                 </div>
               </ResizablePanel>
             </ResizablePanelGroup>

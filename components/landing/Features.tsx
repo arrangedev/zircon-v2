@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import clsx from 'clsx'
 
-import Container from '@/components/ui/Container'
+import Container from '@/components/ui/container'
 
 const features = [
     {

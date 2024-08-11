@@ -27,7 +27,10 @@ export function useSimpleEditor() {
         const webcontainer = await webcontainerPromise;
   
         webcontainer.on('server-ready', (_port, url) => {
-          console.log(url)
+          console.log(url, _port);
+          const regex = /^(https?:\/\/)http(?=localhost)/;
+          const correctedUrl = url.replace(regex, '');
+          console.log(`https://${correctedUrl}`);
           setPreviewSrc(url);
         });
 
@@ -143,6 +146,7 @@ export function useSimpleEditor() {
     }, [terminal]);
   
     return {
+      terminal,
       setTerminal,
       previewSrc,
       documents,
@@ -178,7 +182,7 @@ export function useSimpleEditor() {
           <title>Hello, world!</title>
         </head>
         <body>
-          <script src="./index.js"></script>
+          <h1>Hello, world!</h1>
         </body>
         </html>
       `),

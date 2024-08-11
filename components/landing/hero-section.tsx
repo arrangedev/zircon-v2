@@ -17,7 +17,9 @@ export default function HeroSection() {
   const [isSending, setIsSending] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
 
-  const handleNewsletterSignup = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleNewsletterSignup = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
     setIsSending(true);
 
@@ -31,15 +33,15 @@ export default function HeroSection() {
 
     try {
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
       });
 
       const result = await response.json();
-      console.log(result)
+      console.log(result);
 
       if (response.ok) {
         toast.success("Successfully signed up!");
@@ -75,47 +77,45 @@ export default function HeroSection() {
         <br className="hidden md:block" /> the best Solana developer possible.
       </p>
       {process.env.NEXT_PUBLIC_LAUNCH_READY === "true" ? (
-        <div
-        className="flex gap-2 items-center justify-center ring-2 ring-white/20 h-14 px-1 rounded-lg max-w-md mx-auto translate-y-[-1rem] animate-fade-in opacity-0 ease-in-out [--animation-delay:600ms]"
-      >
-        <input
-          className="w-full h-full rounded-lg bg-transparent focus:outline-none ring-none border-none pl-1"
-          placeholder="Enter your email"
-          type="emal"
-          name="email"
-          id="email"
-          autoComplete="email"
-          required
-          onChange={event => setEmail(event.target.value)}
-        />
-        <Button
-          className="rounded-lg mr-1 text-white dark:text-black"
-          color="splendor"
-          type="submit"
-          disabled={isSending}
-          // loading={isSending}
-          //@ts-ignore
-          onClick={handleNewsletterSignup}
-        >
-          <span className="block sm:hidden">Newsletter</span>
-          <span className="hidden sm:block">Join the newsletter</span>
-          <ArrowRightIcon className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
-        </Button>
-      </div>
-      ) : (
-      <div className="flex gap-2 items-center justify-center">
-        <Link href="/home">
-          <Button className="translate-y-[-1rem] animate-fade-in gap-1 rounded-lg bg-stone-700 text-white hover:bg-stone-500  opacity-0 ease-in-out [--animation-delay:600ms]">
-            <span>Get started</span>
-          </Button>
-        </Link>
-        <Link href="/signup">
-          <Button className="translate-y-[-1rem] animate-fade-in gap-1 rounded-lg text-white dark:text-black opacity-0 ease-in-out [--animation-delay:600ms]">
-            <span>Sign up for free </span>
+        <div className="flex gap-2 items-center justify-center ring-2 ring-white/20 h-14 px-1 rounded-lg max-w-md mx-auto translate-y-[-1rem] animate-fade-in opacity-0 ease-in-out [--animation-delay:600ms]">
+          <input
+            className="w-full h-full rounded-lg bg-transparent focus:outline-none ring-none border-none pl-1"
+            placeholder="Enter your email"
+            type="emal"
+            name="email"
+            id="email"
+            autoComplete="email"
+            required
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <Button
+            className="rounded-lg mr-1 text-white dark:text-black"
+            color="splendor"
+            type="submit"
+            disabled={isSending}
+            // loading={isSending}
+            //@ts-ignore
+            onClick={handleNewsletterSignup}
+          >
+            <span className="block sm:hidden">Newsletter</span>
+            <span className="hidden sm:block">Join the newsletter</span>
             <ArrowRightIcon className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
           </Button>
-        </Link>
-      </div>
+        </div>
+      ) : (
+        <div className="flex gap-2 items-center justify-center">
+          <Link href="/home">
+            <Button className="translate-y-[-1rem] animate-fade-in gap-1 rounded-lg bg-stone-700 text-white hover:bg-stone-500  opacity-0 ease-in-out [--animation-delay:600ms]">
+              <span>Get started</span>
+            </Button>
+          </Link>
+          <Link href="/signup">
+            <Button className="translate-y-[-1rem] animate-fade-in gap-1 rounded-lg text-white dark:text-black opacity-0 ease-in-out [--animation-delay:600ms]">
+              <span>Sign up for free </span>
+              <ArrowRightIcon className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
+            </Button>
+          </Link>
+        </div>
       )}
       <div
         ref={ref}
@@ -135,7 +135,7 @@ export default function HeroSection() {
           />
 
           <img
-            src="/hero-dark.png"
+            src="/zircon-sandbox.svg"
             alt="Hero Image"
             className="hidden relative w-full h-full rounded-[inherit] border object-contain dark:block"
           />

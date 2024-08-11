@@ -1,16 +1,20 @@
-import CourseWrapper from "@/components/course-wrapper";
+import { CourseList } from "@/components/course-list";
+import LearnBanner from "@/components/learn/banner";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Learn | Zircon",
   description:
-    "Discover courses and tutorials to help you learn to build on Solana.",
+    "Find courses, challenges, and resources to help you start building on Solana.",
 };
 
-export default function Page() {
+export default async function Page() {
   return (
-    <>
-      <CourseWrapper />
-    </>
+    <div className="">
+      <LearnBanner />
+      <section className="p-12">
+        <CourseList />
+      </section>
+    </div>
   );
 }

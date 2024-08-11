@@ -1,16 +1,18 @@
-"use client"
-import { Suspense, useEffect, useState } from "react";
+"use client";
+import { Suspense, useEffect, useRef, useState } from "react";
 import type { Terminal as XTerm } from "@xterm/xterm";
 import { useWebContainer } from "@/lib/hooks/useWebContainer";
 import dynamic from "next/dynamic";
+import { useSimpleEditor } from "@/lib/hooks/useEditor";
 
 const Terminal = dynamic(
-  async () => (await import("@tutorialkit/components-react/core/Terminal")).Terminal,
+  async () =>
+    (await import("@tutorialkit/components-react/core/Terminal")).Terminal
 );
 
 export default function BaseTerminal() {
   const [domLoaded, setDomLoaded] = useState(false);
-  const { setTerminal } = useTerminal();
+  const { terminal: term, setTerminal } = useSimpleEditor();
 
   useEffect(() => {
     setDomLoaded(true);
@@ -54,6 +56,7 @@ function useTerminal() {
         new WritableStream({
           write(data) {
             terminal.write(data);
+            terminal.write("hello!")
           },
         })
       );
@@ -67,6 +70,7 @@ function useTerminal() {
   }, [terminal]);
 
   return {
+    terminal,
     setTerminal,
   };
 }

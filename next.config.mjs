@@ -17,6 +17,11 @@ const nextConfig = {
         hostname: "assets.aceternity.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
     ],
   },
   async headers() {

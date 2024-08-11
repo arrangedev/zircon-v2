@@ -1,7 +1,7 @@
 import { getColorForExtension, mapExtensionToIcon } from "@/lib/map-extension-to-icon";
 import { parseFileExtension } from "@/lib/parse-file-extension";
 import { cn } from "@/lib/utils";
-import { IconFile, IconFolder, IconFolderFilled } from "@tabler/icons-react";
+import { IconFolder, IconFolderOpen } from "@tabler/icons-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 const NODE_PADDING_LEFT = 12;
@@ -117,7 +117,7 @@ export function FileTree({
                 folder={fileOrFolder}
                 collapsed={collapsedFolders.has(fileOrFolder.id)}
                 onClick={() => toggleCollapseState(fileOrFolder.id)}
-                icon={collapsedFolders.has(fileOrFolder.id) ? <IconFolderFilled className="h-4 w-4" /> : <IconFolder className="h-4 w-4" />}
+                icon={collapsedFolders.has(fileOrFolder.id) ? <IconFolder className="h-4 w-4" /> : <IconFolderOpen className="h-4 w-4" />}
               />
             );
           }

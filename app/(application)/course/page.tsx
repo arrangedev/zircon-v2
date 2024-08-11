@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     "Discover courses and tutorials to help you learn to build on Solana.",
 };
 
+
 export default function Page() {
   return (
     <>

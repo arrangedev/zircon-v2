@@ -1,4 +1,5 @@
 import HomeBanner from "@/components/home/banner";
+import AppleStyleCarousel from "@/components/home/whats-new";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,6 +12,9 @@ export default async function Page() {
   return (
     <div className="">
       <HomeBanner />
+      <section className="p-12">
+        <AppleStyleCarousel />
+      </section>
     </div>
   );
 }

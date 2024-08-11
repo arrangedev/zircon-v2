@@ -1,11 +1,11 @@
 import { IconHelpCircleFilled, IconSandbox } from "@tabler/icons-react";
-import { LanguageDropdown } from "../language-dropdown";
+import { LanguageDropdown } from "../ui/language-dropdown";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../tooltip";
+} from "../ui/tooltip";
 import { EditorDocument } from "@tutorialkit/components-react/core";
 
 interface SandboxEditorHeaderProps {
@@ -18,9 +18,8 @@ export default function SandboxEditorHeader({
   return (
     <div className="p-2 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <IconSandbox className="h-6 w-6 text-[#FF25CF]/75" />
         <h1 className="text-xl font-semibold bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text text-transparent">
-          Sandbox
+          🏝 Sandbox
         </h1>
         <TooltipProvider>
           <Tooltip>

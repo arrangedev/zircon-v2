@@ -16,7 +16,7 @@ import { CommandMenu } from "./ui/command-palette";
 import { useState } from "react";
 import ModeHeader from "./ui/mode-header";
 import BasePreview from "./ui/preview";
-import SandboxEditorHeader from "./ui/sandbox/sb-editor-header";
+import SandboxEditorHeader from "./sandbox/header";
 
 export default function SandboxEditor() {
   const [mode, setMode] = useState<"preview" | "terminal">("terminal");

@@ -2,12 +2,13 @@
 
 import { IconSchool } from "@tabler/icons-react";
 import { motion } from "framer-motion";
+import { ShootingStars } from "../ui/shooting-stars";
+import { StarsBackground } from "../ui/stars-background";
 
 export default function LearnBanner() {
   return (
-    <section id="hero" className="relative px-6 md:px-8">
-      <div className="flex gap-4 items-center">
-        <IconSchool stroke={1} className="h-12 w-12" />
+    <section id="hero" className="relative bg-neutral-900 p-14">
+      <div className="flex gap-6 items-center">
         <div>
           <motion.h1
             initial={{ opacity: 0.5, x: 50 }}
@@ -17,9 +18,9 @@ export default function LearnBanner() {
               duration: 0.8,
               ease: "easeInOut",
             }}
-            className="text-5xl font-medium"
+            className="text-5xl font-medium bg-clip-text text-transparent bg-gradient-to-br from-neutral-400 via-white to-white"
           >
-            Learn
+            🎓 Learn
           </motion.h1>
           <motion.p
             initial={{ opacity: 0.5, x: 50 }}
@@ -29,12 +30,14 @@ export default function LearnBanner() {
               duration: 0.8,
               ease: "easeInOut",
             }}
-            className="mt-2 text-zinc-300"
+            className="mt-2 text-zinc-100 font-light"
           >
-            Start building on Solana with 15min courses.
+            Start building on Solana with 15 minute courses.
           </motion.p>
         </div>
       </div>
+      <ShootingStars />
+      <StarsBackground />
     </section>
   );
 }

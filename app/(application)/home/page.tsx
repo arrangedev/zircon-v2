@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   return (
-    <div className="p-12">
+    <div className="">
       <HomeBanner />
     </div>
   );

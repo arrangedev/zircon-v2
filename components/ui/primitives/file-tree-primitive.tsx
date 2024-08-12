@@ -1,4 +1,7 @@
-import { getColorForExtension, mapExtensionToIcon } from "@/lib/map-extension-to-icon";
+import {
+  getColorForExtension,
+  mapExtensionToIcon,
+} from "@/lib/map-extension-to-icon";
 import { parseFileExtension } from "@/lib/parse-file-extension";
 import { cn } from "@/lib/utils";
 import { IconFolder, IconFolderOpen } from "@tabler/icons-react";
@@ -117,7 +120,13 @@ export function FileTree({
                 folder={fileOrFolder}
                 collapsed={collapsedFolders.has(fileOrFolder.id)}
                 onClick={() => toggleCollapseState(fileOrFolder.id)}
-                icon={collapsedFolders.has(fileOrFolder.id) ? <IconFolder className="h-4 w-4" /> : <IconFolderOpen className="h-4 w-4" />}
+                icon={
+                  collapsedFolders.has(fileOrFolder.id) ? (
+                    <IconFolder className="h-4 w-4" />
+                  ) : (
+                    <IconFolderOpen className="h-4 w-4" />
+                  )
+                }
               />
             );
           }
@@ -150,7 +159,7 @@ export function Folder({
         iconClasses={""}
         onClick={onClick}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 text-sm">
           <span className="mr-2 flex-shrink-0">{icon}</span>
           {name}
         </div>
@@ -166,7 +175,13 @@ interface FileProps {
   icon: ReactNode;
 }
 
-export function File({ file: { depth, name, fullPath }, onClick, selected, icon }: FileProps) {
+export function File({
+  file: { depth, name, fullPath },
+  onClick,
+  selected,
+  icon,
+}: FileProps) {
+  const extension = parseFileExtension(fullPath as string);
   return (
     <div className="flex items-center gap-2">
       <NodeButton
@@ -181,8 +196,39 @@ export function File({ file: { depth, name, fullPath }, onClick, selected, icon 
         iconClasses={""}
         onClick={onClick}
       >
-        <div className="flex items-center gap-2">
-          <span className={`mr-2 flex-shrink-0 ${getColorForExtension(parseFileExtension(fullPath as string) as string)}`}>{icon}</span>
+        <div className="flex items-center gap-2 text-sm">
+          <span
+            className={`mr-2 flex-shrink-0 ${
+              // This sucks, but it works
+              extension == `html`
+                ? `text-orange-500`
+                : extension == `css`
+                ? `text-purple-600`
+                : extension == `tsx`
+                ? `text-cyan-600`
+                : extension == `jsx`
+                ? `text-cyan-600`
+                : extension == `json`
+                ? `text-yellow-400`
+                : extension == `rs`
+                ? `text-orange-600`
+                : extension == `toml`
+                ? `text-zinc-600`
+                : extension == `png`
+                ? `text-zinc-600`
+                : extension == `jpg`
+                ? `text-zinc-600`
+                : extension == `jpeg`
+                ? `text-zinc-600`
+                : extension == `gif`
+                ? `text-zinc-600`
+                : extension == `svg`
+                ? `text-zinc-600`
+                : getColorForExtension(extension)
+            }`}
+          >
+            {icon}
+          </span>
           {name}
         </div>
       </NodeButton>

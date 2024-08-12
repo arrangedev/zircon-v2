@@ -5,9 +5,11 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { ANCHOR_FILES, DEFAULT_FILES } from "@/lib/default-files";
+import { ANCHOR_FILES, DEFAULT_FILES, REACT_FILES } from "@/lib/default-files";
+import { useSimpleEditor } from "@/lib/hooks/useEditor";
 import {
   IconAnchor,
+  IconAssembly,
   IconBrandNodejs,
   IconBrandPython,
   IconBrandReact,
@@ -19,16 +21,22 @@ interface LanguageDropdownProps {
 }
 
 export function LanguageDropdown({ setDocuments }: LanguageDropdownProps) {
-  function onValueChange(value: string) {
+  const { changeDocuments } = useSimpleEditor();
+  async function onValueChange(value: string) {
     if (value === "node") {
       setDocuments(DEFAULT_FILES);
+      await changeDocuments(DEFAULT_FILES);
     } else if (value === "anchor") {
       setDocuments(ANCHOR_FILES);
+      await changeDocuments(DEFAULT_FILES);
+    } else if (value === "react") {
+      setDocuments(REACT_FILES);
+      await changeDocuments(DEFAULT_FILES);
     }
   }
 
   return (
-    <Select onValueChange={(value) => onValueChange(value)} defaultValue="node">
+    <Select onValueChange={async (value) => await onValueChange(value)} defaultValue="node">
       <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Select preset" />
       </SelectTrigger>
@@ -53,8 +61,8 @@ export function LanguageDropdown({ setDocuments }: LanguageDropdownProps) {
         </SelectItem>
         <SelectItem value="python">
           <div className="flex items-center gap-2">
-            <IconBrandPython stroke={1} className="w-4 h-4 text-emerald-500" />
-            Python
+            <IconAssembly stroke={1} className="w-4 h-4 text-orange-500" />
+            Assembly (eBPF)
           </div>
         </SelectItem>
       </SelectContent>

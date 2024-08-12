@@ -4,7 +4,7 @@ import type { Terminal as XTerm } from '@xterm/xterm';
 import { EditorDocument, EditorUpdate, ScrollPosition } from "@tutorialkit/components-react/core";
 import { useEffect, useState } from "react";
 import { useWebContainer } from './useWebContainer';
-import { set } from 'react-hook-form';
+import { ANCHOR_FILES, DEFAULT_FILES, REACT_FILES } from '../default-files';
 
 export function useSimpleEditor() {
     const webcontainerPromise = useWebContainer();
@@ -27,23 +27,12 @@ export function useSimpleEditor() {
         const webcontainer = await webcontainerPromise;
   
         webcontainer.on('server-ready', (_port, url) => {
-          console.log(url, _port);
-          const regex = /^(https?:\/\/)http(?=localhost)/;
-          const correctedUrl = url.replace(regex, '');
-          console.log(`https://${correctedUrl}`);
           setPreviewSrc(url);
         });
-
-        console.log(previewSrc)
   
-        await webcontainer.mount(toFileTree(DEFAULT_FILES));
+        await webcontainer.mount(toFileTree({ ...DEFAULT_FILES, ...REACT_FILES, ...ANCHOR_FILES }));
       })();
     }, [isClient]);
-
-    function changeDocuments(documents: Record<string, EditorDocument>) {
-      setDocuments(documents);
-      setSelectedFile(Object.keys(documents)[0]);
-    }
 
     // Function to add a new file to the file tree and web container
     async function addFile(fileName: string) {
@@ -64,6 +53,62 @@ export function useSimpleEditor() {
       // Write the file to the web container
       const webcontainer = await webcontainerPromise;
       await webcontainer.fs.writeFile(newFilePath, "");
+    }
+
+    async function run(terminal: XTerm) {
+      const webcontainer = await webcontainerPromise;
+      const process = await webcontainer.spawn('jsh', ['--osc'], {
+        terminal: {
+          cols: terminal.cols,
+          rows: terminal.rows,
+        },
+      });
+
+      let isInteractive = false;
+      let resolveReady!: () => void;
+
+      const jshReady = new Promise<void>((resolve) => {
+        resolveReady = resolve;
+      });
+
+      process.output.pipeTo(
+        new WritableStream({
+          write(data) {
+            if (!isInteractive) {
+              const [, osc] = data.match(/\x1b\]654;([^\x07]+)\x07/) || [];
+
+              if (osc === 'interactive') {
+                // wait until we see the interactive OSC
+                isInteractive = true;
+
+                resolveReady();
+              }
+            }
+
+            terminal.write(data);
+          },
+        }),
+      );
+
+      const shellWriter = process.input.getWriter();
+
+      terminal.onData((data) => {
+        if (isInteractive) {
+          shellWriter.write(data);
+        }
+      });
+
+      await jshReady;
+      
+      shellWriter.write('cd node && npm install && npm start\n');
+    }
+
+    async function changeDocuments(documents: Record<string, EditorDocument>) {
+      terminal?.reset();
+
+      setDocuments(documents);
+
+      setSelectedFile(Object.keys(documents)[0]);
     }
   
     async function onChange({ content }: EditorUpdate) {
@@ -95,54 +140,6 @@ export function useSimpleEditor() {
       if (!isClient || !terminal) return;
   
       run(terminal);
-  
-      async function run(terminal: XTerm) {
-        const webcontainer = await webcontainerPromise;
-        const process = await webcontainer.spawn('jsh', ['--osc'], {
-          terminal: {
-            cols: terminal.cols,
-            rows: terminal.rows,
-          },
-        });
-  
-        let isInteractive = false;
-        let resolveReady!: () => void;
-  
-        const jshReady = new Promise<void>((resolve) => {
-          resolveReady = resolve;
-        });
-  
-        process.output.pipeTo(
-          new WritableStream({
-            write(data) {
-              if (!isInteractive) {
-                const [, osc] = data.match(/\x1b\]654;([^\x07]+)\x07/) || [];
-  
-                if (osc === 'interactive') {
-                  // wait until we see the interactive OSC
-                  isInteractive = true;
-  
-                  resolveReady();
-                }
-              }
-  
-              terminal.write(data);
-            },
-          }),
-        );
-  
-        const shellWriter = process.input.getWriter();
-  
-        terminal.onData((data) => {
-          if (isInteractive) {
-            shellWriter.write(data);
-          }
-        });
-  
-        await jshReady;
-        
-        shellWriter.write('npm install && npm start\n');
-      }
     }, [terminal]);
   
     return {
@@ -162,6 +159,7 @@ export function useSimpleEditor() {
     };
   }
   
+  /*
   const DEFAULT_FILES: Record<string, EditorDocument> = {
     '/src/index.ts': {
       filePath: '/src/index.ts',
@@ -201,9 +199,9 @@ export function useSimpleEditor() {
       loading: false,
       value: stripIndent(`
         {
-          "name": "hello-world",
+          "name": "zircon",
           "version": "1.0.0",
-          "description": "Hello, world!",
+          "description": "Generated by Zircon.",
           "main": "index.js",
           "scripts": {
             "start": "servor src/ --reload"
@@ -217,6 +215,7 @@ export function useSimpleEditor() {
       `),
     },
   };
+  */
   
   const FILE_PATHS = Object.keys(DEFAULT_FILES);
   

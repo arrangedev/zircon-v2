@@ -8,19 +8,19 @@ export function mapExtensionToIcon(extension: string) {
     case "ts":
       return <IconBrandTypescript className={`w-3 h-3 !text-blue-600`} />;
     case "jsx":
-      return <IconBrandReact className={`w-3 h-3 text-cyan-600`} />;
+      return <IconBrandReact className={`w-3 h-3 !text-cyan-600`} />;
     case "tsx":
-      return <IconBrandReact className={`w-3 h-3 text-cyan-600`} />;
+      return <IconBrandReact className={`w-3 h-3 !text-cyan-600`} />;
     case "json":
       return <IconJson className={`w-3 h-3 !text-yellow-400`} />;
     case "css":
-      return <IconBrandCss3 className={`w-3 h-3 text-purple-600`} />;
+      return <IconBrandCss3 className={`w-3 h-3 !text-purple-600`} />;
     case "html":
       return <IconBrandHtml5 className={`w-3 h-3 !text-red-600`} />;
     case "md":
       return <IconMarkdown className={`w-3 h-3 text-zinc-600`} />;
     case "rs":
-      return <IconBrandRust className={`w-3 h-3 text-red-600`} />;
+      return <IconBrandRust className={`w-3 h-3 text-orange-600`} />;
     case "toml":
       return <IconSettings className={`w-3 h-3 text-zinc-600`} />;
     case "png":
@@ -39,7 +39,8 @@ export function mapExtensionToIcon(extension: string) {
 }
 
 export function getColorForExtension(extension: string) {
-  switch (extension) {
+  const lowercaseExtension = extension.toLowerCase().trim();
+  switch (lowercaseExtension) {
     case "js":
       return "text-yellow-400";
     case "ts":
@@ -53,7 +54,7 @@ export function getColorForExtension(extension: string) {
     case "css":
       return "text-purple-600";
     case "html":
-      return "text-red-600";
+      return "text-orange-500";
     case "md":
       return "text-zinc-600";
     case "rs":

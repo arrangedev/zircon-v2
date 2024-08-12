@@ -94,26 +94,18 @@ export default function SandboxEditor() {
               </ResizablePanel>
               <ResizableHandle />
               <ResizablePanel defaultSize={40}>
-                {/*
-                <ResizablePanelGroup
-                  direction="horizontal"
-                  className="w-full h-56 border border-[var(--border)]/25"
-                >
-                  <ResizablePanel defaultSize={80}>
-                    <BaseTerminal />
-                  </ResizablePanel>
-                  <ResizableHandle />
-                  <ResizablePanel defaultSize={20}>
-                    <BasePreview previewSrc={previewSrc} />
-                  </ResizablePanel>
-                  </ResizablePanelGroup>
-              */}
                 <ModeHeader mode={mode} onModeChange={onModeChange} />
-                <div className="w-full h-64">
-                  <div className={mode === "preview" ? "block h-full" : "hidden"}>
+                <div className="w-full h-full">
+                  <div
+                    className={mode === "preview" ? "block h-full" : "hidden"}
+                  >
                     <BasePreview previewSrc={previewSrc} />
                   </div>
-                  <div className={mode === "terminal" ? "block p-2 h-full" : "hidden"}>
+                  <div
+                    className={
+                      mode === "terminal" ? "block p-2 h-[90%] max-h-screen" : "hidden"
+                    }
+                  >
                     <BaseTerminal />
                   </div>
                 </div>
@@ -121,11 +113,16 @@ export default function SandboxEditor() {
             </ResizablePanelGroup>
           </ResizablePanel>
         </ResizablePanelGroup>
+        {/*}
         <div className="relative p-1 w-full flex items-center justify-between z-50">
           <div className="flex items-center justify-between gap-2">
             <p className="text-xs font-regular text-white">
-              {mapExtensionToLang(
-                parseFileExtension(document.filePath as string) as string
+              {document?.filePath && (
+                <>
+                  {mapExtensionToLang(
+                    parseFileExtension(document.filePath as string) as string
+                  )}
+                </>
               )}
             </p>
             <p className="text-xs font-light italic text-white">
@@ -133,6 +130,7 @@ export default function SandboxEditor() {
             </p>
           </div>
         </div>
+            */}
       </motion.div>
     </>
   );

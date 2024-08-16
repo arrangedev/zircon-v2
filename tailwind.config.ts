@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
+import colors, { zinc } from "tailwindcss/colors";
 
 const config = {
   darkMode: ["class"],
@@ -17,6 +18,10 @@ const config = {
       screens: {
         "2xl": "1400px",
       },
+    },
+    colors: {
+      ...colors,
+      mid: "#1E1E20",
     },
     extend: {
       fontFamily: {
@@ -127,10 +132,7 @@ const config = {
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    require('@tailwindcss/typography')
-  ],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
 
 export default config;

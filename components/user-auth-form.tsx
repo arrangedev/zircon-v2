@@ -1,6 +1,6 @@
 "use client";
 
-import { login, loginWithGithub } from "@/app/(auth)/login/actions";
+import { login, loginWithGithub, signup } from "@/app/(auth)/login/actions";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Form,
@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { IconBrandX } from "@tabler/icons-react";
 import { Loader2 } from "lucide-react";
+import { usePathname } from "next/navigation";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -29,6 +30,7 @@ type FormData = z.infer<typeof userAuthSchema>;
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const pathname = usePathname();
   const form = useForm<FormData>({
     resolver: zodResolver(userAuthSchema),
     defaultValues: {
@@ -37,19 +39,24 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   });
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false);
-  const [isTwitterLoading, setIsTwitterLoading] = React.useState<boolean>(false);
+  const [isTwitterLoading, setIsTwitterLoading] =
+    React.useState<boolean>(false);
 
   async function onSubmit(data: FormData) {
     setIsLoading(true);
 
-    await login(data.email);
+    if (pathname == "/signup") {
+      await signup(data.email);
+    } else {
+      await login(data.email);
+    }
 
-    const signInResult = { ok: true };
     setIsLoading(false);
 
-    if (!signInResult?.ok) {
+    const signInResult = { ok: true };
+    if (!signInResult.ok) {
       return toast.error("Something went wrong.", {
-        description: "Your sign in request failed. Please try again.",
+        description: "Please try again later.",
       });
     }
 
@@ -67,7 +74,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={async () => form.handleSubmit(onSubmit)}>
           <div className="grid gap-4">
             <FormField
               control={form.control}
@@ -97,9 +104,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               type="submit"
               className={cn(buttonVariants())}
               disabled={isLoading || isGitHubLoading}
-              onClick={() => {
-                // onSignIn();
-              }}
             >
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Sign In with Email

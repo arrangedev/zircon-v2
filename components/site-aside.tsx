@@ -1,17 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {
-  IconArrowLeft,
-  IconBook,
-  IconBrandTabler,
   IconCodeDots,
-  IconCommand,
   IconDashboard,
   IconLogout,
   IconSandbox,
   IconSchool,
-  IconSettings,
-  IconUserBolt,
+  IconTree,
   IconUserCircle,
 } from "@tabler/icons-react";
 import Link from "next/link";
@@ -72,6 +67,16 @@ export default function SiteAside({ children }: { children: React.ReactNode }) {
       ),
     },
     {
+      label: "Skill Trees",
+      href: "/skill-trees",
+      icon: (
+        <IconTree
+          stroke={1}
+          className={`text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0`}
+        />
+      ),
+    },
+    {
       label: "Sandbox",
       href: "/sandbox",
       icon: (
@@ -112,8 +117,10 @@ export default function SiteAside({ children }: { children: React.ReactNode }) {
               <SidebarLink
                 className=""
                 link={{
-                  label: user.user_metadata.user_name ? user.user_metadata.user_name : user?.user_metadata?.email,
-                  href: `/profile/${user?.user_metadata?.email}`,
+                  label: user.user_metadata.user_name
+                    ? user.user_metadata.user_name
+                    : user?.user_metadata?.email,
+                  href: `/profile/${user?.user_metadata?.user_name}`,
                   icon: (
                     <Image
                       src={
@@ -166,12 +173,7 @@ export const Logo = () => {
       href="/"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <motion.img
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        src="./zircon-logo.svg"
-        className="h-6"
-      />
+      <motion.img src={`/zircon-logo.svg`} className="h-6" />
     </Link>
   );
 };
@@ -181,7 +183,7 @@ export const LogoIcon = () => {
       href="/"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <img src="./zircon-icon.svg" className="h-5 w-6 flex-shrink-0" />
+      <img src={`/zircon-icon.svg`} className="h-5 w-6 flex-shrink-0" />
     </Link>
   );
 };

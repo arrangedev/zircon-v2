@@ -1,11 +1,10 @@
 "use client";
 
-import { IconSchool } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { ShootingStars } from "../ui/shooting-stars";
 import { StarsBackground } from "../ui/stars-background";
 
-export default function LearnBanner() {
+export default function SkillTreesBanner() {
   return (
     <section id="hero" className="relative bg-neutral-900 p-14">
       <div className="flex gap-6 items-center">
@@ -20,7 +19,7 @@ export default function LearnBanner() {
             }}
             className="text-5xl leading-normal font-medium bg-clip-text text-transparent bg-gradient-to-br from-neutral-400 via-white to-white"
           >
-            🎓 Learn
+            🌴 Skill Trees
           </motion.h1>
           <motion.p
             initial={{ opacity: 0.5, x: 50 }}
@@ -32,7 +31,7 @@ export default function LearnBanner() {
             }}
             className="mt-2 text-zinc-100 font-light"
           >
-            Start building on Solana with 15 minute courses.
+            The skills you need to be a Solana developer in any vertical.
           </motion.p>
         </div>
       </div>

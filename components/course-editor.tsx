@@ -8,14 +8,7 @@ import {
   ResizablePanelGroup,
 } from "./ui/resizable";
 import BaseTerminal from "./ui/terminal";
-import { useSimpleEditor } from "@/lib/hooks/useEditor";
-import {
-  IconCurrencySolana,
-  IconFilePlus,
-  IconFolderPlus,
-  IconHelpCircleFilled,
-  IconSandbox,
-} from "@tabler/icons-react";
+import { IconHelpCircleFilled } from "@tabler/icons-react";
 import {
   Tooltip,
   TooltipContent,
@@ -30,15 +23,25 @@ import ModeHeader from "./ui/mode-header";
 import BasePreview from "./ui/preview";
 import { CourseProgress } from "./ui/course-progress";
 import { marked } from "marked";
+import { useCourse } from "@/lib/hooks/useCourse";
+import { buttonVariants } from "./ui/button";
+import { cn } from "@/lib/utils";
+import { Course } from "@/lib/courses";
 
 interface CourseEditorProps {
   progress: number;
   setProgress: React.Dispatch<React.SetStateAction<number>>;
+  step: number;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+  course: Course;
 }
 
 export default function CourseEditor({
   progress,
   setProgress,
+  step,
+  setStep,
+  course,
 }: CourseEditorProps) {
   const [content, setContent] = useState<any>("");
   const [mode, setMode] = useState<"preview" | "terminal">("terminal");
@@ -51,16 +54,20 @@ export default function CourseEditor({
     onScroll,
     selectedFile,
     setSelectedFile,
-  } = useSimpleEditor();
+    setTerminal,
+  } = useCourse({
+    initialDocuments: course.initialCode,
+    installOnStartup: course.installOnStartup,
+  });
 
   useEffect(() => {
     const getMd = async () => {
-      const response = await fetch("/intro.md");
+      const response = await fetch(`/sample-course/intro-${step + 1}.md`);
       const data = await response.text();
       setContent(await marked(data));
     };
     getMd();
-  }, []);
+  }, [step]);
 
   function onModeChange() {
     if (mode === "preview") {
@@ -85,9 +92,9 @@ export default function CourseEditor({
       >
         <div className="p-2 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <IconCurrencySolana className="h-6 w-6 text-[#FF25CF]/75" />
+            {course.icon}
             <h1 className="text-xl font-semibold bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text text-transparent">
-              Sample Course
+              {course.title}
             </h1>
             <TooltipProvider>
               <Tooltip>
@@ -104,21 +111,64 @@ export default function CourseEditor({
             </TooltipProvider>
           </div>
           <div className="w-48">
-            <CourseProgress progress={progress} setProgress={setProgress} />
+            <CourseProgress progress={((step + 1) / course.maxSteps) * 100} />
           </div>
         </div>
         <ResizablePanelGroup
           direction="horizontal"
-          className="w-full h-full border border-[var(--border)]/25"
+          className="w-full h-full border-r border-t border-b border-[var(--border)]/25 max-h-[calc(100vh-4.1rem)]"
         >
-          <ResizablePanel defaultSize={40} minSize={25}>
-            <div className="flex-grow h-full relative p-2">
+          <ResizablePanel defaultSize={40} minSize={25} className="relative h-full">
+            <div className="h-full p-2 overflow-y-scroll">
               {content && (
-                <article
-                  className="prose prose-zinc lg:prose-lg dark:prose-headings:text-zinc-100 prose-h1:text-2xl prose-h2:text-xl prose-p:text-zinc-300 dark:prose-p:font-light prose-li:text-zinc-300 prose-ol:text-zinc-300 prose-a:text-pink-400 prose-code:text-pink-400"
+                <div className="flex-grow overflow-y-auto">
+                <motion.article
+                  transition={{
+                    delay: 0.3,
+                    duration: 0.8,
+                    ease: "fadeInOut",
+                  }}
+                  className="prose prose-zinc lg:prose-lg dark:prose-headings:text-zinc-100 prose-h1:text-3xl prose-h2:text-2xl prose-p:text-zinc-300 dark:prose-p:font-regular prose-li:text-zinc-300 prose-ol:text-zinc-300 prose-a:text-pink-400 prose-code:text-pink-400"
                   dangerouslySetInnerHTML={{ __html: content }}
                 />
+                </div>
               )}
+              <div className="flex items-center justify-between mt-6 px-1 z-50">
+                <button
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "text-sm"
+                  )}
+                  onClick={() =>
+                    setStep((prev) => {
+                      if (prev <= 0) {
+                        return 0;
+                      } else {
+                        return prev - 1;
+                      }
+                    })
+                  }
+                >
+                  Prev
+                </button>
+                <button
+                  className={cn(
+                    buttonVariants({ variant: "secondary" }),
+                    "text-sm"
+                  )}
+                  onClick={() =>
+                    setStep((prev) => {
+                      if (prev >= course.maxSteps - 1) {
+                        return course.maxSteps - 1;
+                      } else {
+                        return prev + 1;
+                      }
+                    })
+                  }
+                >
+                  Next
+                </button>
+              </div>
             </div>
           </ResizablePanel>
           <ResizableHandle />
@@ -162,15 +212,15 @@ export default function CourseEditor({
                       mode === "terminal" ? "block p-2 h-full" : "hidden"
                     }
                   >
-                    <BaseTerminal />
+                    <BaseTerminal setTerminal={setTerminal} />
                   </div>
                 </div>
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>
         </ResizablePanelGroup>
-        <div className="relative p-1 w-full flex items-center justify-between z-50">
-          <div className="flex items-center justify-between gap-2">
+        <div className="relative w-full flex items-center justify-between z-50">
+          <div className="flex items-center justify-between gap-2 p-1">
             <p className="text-xs font-regular text-white">
               {mapExtensionToLang(
                 parseFileExtension(document.filePath as string) as string
@@ -179,6 +229,9 @@ export default function CourseEditor({
             <p className="text-xs font-light italic text-white">
               .{document.filePath}
             </p>
+          </div>
+          <div className="bg-[#FF25CF] text-xs p-1">
+            <i>Course</i> Mode
           </div>
         </div>
       </motion.div>

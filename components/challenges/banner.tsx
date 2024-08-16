@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ShootingStars } from "../ui/shooting-stars";
 import { StarsBackground } from "../ui/stars-background";
 
-export default function HomeBanner() {
+export default function ChallengesBanner() {
   return (
     <section id="hero" className="relative bg-neutral-900 p-14">
       <motion.h1
@@ -17,7 +17,7 @@ export default function HomeBanner() {
         }}
         className="text-5xl leading-normal font-medium bg-clip-text text-transparent bg-gradient-to-br from-neutral-400 via-white to-white"
       >
-        ✨ Explore Zircon
+        💿 Challenges
       </motion.h1>
       <motion.p
         initial={{ opacity: 0.5, x: 50 }}
@@ -29,7 +29,7 @@ export default function HomeBanner() {
         }}
         className="mt-2 text-zinc-100 font-light"
       >
-        Find out what's new with Zircon.
+        Test your skills with challenges of varying difficulty.
       </motion.p>
       <ShootingStars />
       <StarsBackground />

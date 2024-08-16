@@ -3,23 +3,9 @@ import React, { useState, useEffect } from "react"
 
 interface CourseProgressProps {
   progress: number
-  setProgress: React.Dispatch<React.SetStateAction<number>>
 }
 
-export function CourseProgress({ progress, setProgress }: CourseProgressProps) {
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prevProgress) => {
-        if (prevProgress < progress) {
-          return prevProgress + 5
-        } else {
-          clearInterval(interval)
-          return progress
-        }
-      })
-    }, 100)
-    return () => clearInterval(interval)
-  }, [])
+export function CourseProgress({ progress }: CourseProgressProps) {
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="relative w-full max-w-md rounded-full bg-zinc-800">

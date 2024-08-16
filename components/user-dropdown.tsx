@@ -1,9 +1,16 @@
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuItem } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import Link from "next/link"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import Link from "next/link";
 import { IconLogout, IconSettings, IconUserCircle } from "@tabler/icons-react";
 import { logout } from "@/app/(auth)/login/actions";
+import { useRouter } from "next/router";
 
 interface UserDropdownProps {
   email: string;
@@ -36,7 +43,11 @@ export function UserDropdown({ email, avatar, username }: UserDropdownProps) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href="#" className="flex items-center gap-2" prefetch={false}>
+          <Link
+            href={`/profile/${username}`}
+            className="flex items-center gap-2"
+            prefetch={false}
+          >
             <IconUserCircle stroke={1} className="h-4 w-4" />
             <span>Profile</span>
           </Link>
@@ -49,12 +60,18 @@ export function UserDropdown({ email, avatar, username }: UserDropdownProps) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href="#" onClick={() => logout()} className="flex items-center gap-2" prefetch={false}>
+          <button
+            onClick={async () => {
+              await logout();
+              window.location.reload();
+            }}
+            className="flex items-center gap-2"
+          >
             <IconLogout stroke={1} className="h-4 w-4" />
             <span>Sign out</span>
-          </Link>
+          </button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

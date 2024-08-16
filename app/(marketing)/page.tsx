@@ -1,6 +1,6 @@
-import Clients from "@/components/landing/Clients";
-import Features from "@/components/landing/Features";
-import Testimonials from "@/components/landing/Testimonials";
+import Clients from "@/components/landing/clients";
+import Features from "@/components/landing/features";
+import Testimonials from "@/components/landing/testimonials";
 import CallToAction from "@/components/landing/cta-section";
 import HeroSection from "@/components/landing/hero-section";
 

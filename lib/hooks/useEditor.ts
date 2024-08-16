@@ -1,5 +1,5 @@
 "use client"
-import type { FileSystemTree, DirectoryNode } from '@webcontainer/api';
+import type { FileSystemTree, DirectoryNode, WebContainerProcess } from '@webcontainer/api';
 import type { Terminal as XTerm } from '@xterm/xterm';
 import { EditorDocument, EditorUpdate, ScrollPosition } from "@tutorialkit/components-react/core";
 import { useEffect, useState } from "react";
@@ -10,9 +10,11 @@ export function useSimpleEditor() {
     const webcontainerPromise = useWebContainer();
     const [isClient, setIsClient] = useState(false);
     const [terminal, setTerminal] = useState<XTerm | null>(null);
-    const [selectedFile, setSelectedFile] = useState('/src/index.ts');
+    const [selectedFile, setSelectedFile] = useState('/node/src/index.ts');
     const [documents, setDocuments] = useState<Record<string, EditorDocument>>(DEFAULT_FILES);
     const [previewSrc, setPreviewSrc] = useState<string>('');
+    const [currentWriter, setCurrentWriter] = useState<WritableStreamDefaultWriter<string> | null>(null);
+    const [preset, setPreset] = useState<"node" | "react" | "anchor" | "asm">("node");
   
     const document = documents[selectedFile];
 
@@ -101,12 +103,20 @@ export function useSimpleEditor() {
       await jshReady;
       
       shellWriter.write('cd node && npm install && npm start\n');
+      setCurrentWriter(shellWriter);
     }
 
     async function changeDocuments(documents: Record<string, EditorDocument>) {
-      terminal?.reset();
-
       setDocuments(documents);
+
+      terminal?.focus();
+      // Press CTRL+C to exit
+      currentWriter?.write('\x03');
+      const a = Object.keys(documents)[0];
+      const b = a.match(/node|react|anchor|asm/)![0];
+      currentWriter?.write(`cd ../${b} && npm install && npm ${
+        b === "node" ? "start" : "run dev"
+      }\n`);
 
       setSelectedFile(Object.keys(documents)[0]);
     }
@@ -155,6 +165,8 @@ export function useSimpleEditor() {
       onChange,
       onScroll,
       document,
+      preset,
+      setPreset,
       files: Object.keys(documents),
     };
   }

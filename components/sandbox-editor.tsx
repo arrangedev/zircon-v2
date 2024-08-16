@@ -29,6 +29,9 @@ export default function SandboxEditor() {
     onScroll,
     selectedFile,
     setSelectedFile,
+    setTerminal,
+    preset,
+    setPreset,
   } = useSimpleEditor();
 
   function onModeChange() {
@@ -55,7 +58,7 @@ export default function SandboxEditor() {
         <SandboxEditorHeader changeDocuments={changeDocuments} />
         <ResizablePanelGroup
           direction="horizontal"
-          className="w-full h-full border border-[var(--border)]/25"
+          className="w-full h-full border-r border-t border-b border-[var(--border)]/25 max-h-[calc(100vh-4.75rem)]"
         >
           <ResizablePanel defaultSize={20}>
             <div className="flex gap-2 items-center justify-end border-b border-[var(--border)]/25 p-1">
@@ -95,7 +98,7 @@ export default function SandboxEditor() {
               <ResizableHandle />
               <ResizablePanel defaultSize={40}>
                 <ModeHeader mode={mode} onModeChange={onModeChange} />
-                <div className="w-full h-full">
+                <div className="w-full h-full overflow-y-scroll">
                   <div
                     className={mode === "preview" ? "block h-full" : "hidden"}
                   >
@@ -103,34 +106,33 @@ export default function SandboxEditor() {
                   </div>
                   <div
                     className={
-                      mode === "terminal" ? "block p-2 h-[90%] max-h-screen" : "hidden"
+                      mode === "terminal" ? "block p-2 h-[60%]" : "hidden"
                     }
                   >
-                    <BaseTerminal />
+                    <BaseTerminal setTerminal={setTerminal} />
                   </div>
                 </div>
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>
         </ResizablePanelGroup>
-        {/*}
-        <div className="relative p-1 w-full flex items-center justify-between z-50">
-          <div className="flex items-center justify-between gap-2">
-            <p className="text-xs font-regular text-white">
-              {document?.filePath && (
-                <>
-                  {mapExtensionToLang(
-                    parseFileExtension(document.filePath as string) as string
-                  )}
-                </>
-              )}
-            </p>
-            <p className="text-xs font-light italic text-white">
-              .{document.filePath}
-            </p>
+        <div className="relative w-full flex items-center justify-between z-50">
+          {document && (
+            <div className="flex items-center justify-between gap-2 p-1">
+              <p className="text-xs font-regular text-white">
+                {mapExtensionToLang(
+                  parseFileExtension(document.filePath as string) as string
+                )}
+              </p>
+              <p className="text-xs font-light italic text-white">
+                .{document.filePath}
+              </p>
+            </div>
+          )}
+          <div className="bg-orange-600 text-xs p-1">
+            <i>Sandbox</i> Mode
           </div>
         </div>
-            */}
       </motion.div>
     </>
   );

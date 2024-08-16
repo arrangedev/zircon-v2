@@ -88,7 +88,6 @@ export function SiteHeader() {
     const getUser = async () => {
       const supabase = createClient();
       const { data: user } = await supabase.auth.getUser();
-      console.log(user, user.user?.user_metadata.email);
       setUser(user.user);
     };
     getUser();

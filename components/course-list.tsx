@@ -128,7 +128,7 @@ export function CourseList() {
           </div>
         ) : null}
       </AnimatePresence>
-      <ul className="w-full mx-auto grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-4">
+      <ul className="w-full mx-auto grid grid-cols-4 max-[1180px]:grid-cols-3 max-[980px]:grid-cols-2 max-[648px]:grid-cols-1 items-start gap-4">
         {cards.map((card, index) => (
           <motion.div
             layoutId={`card-${card.title}-${id}`}
@@ -143,7 +143,7 @@ export function CourseList() {
                   height={100}
                   src={card.src}
                   alt={card.title}
-                  className="h-60 w-full  rounded-lg object-cover object-top"
+                  className="h-60 w-full rounded-lg object-cover"
                 />
               </motion.div>
               <div className="flex justify-center items-center flex-col">
@@ -205,7 +205,7 @@ const cards = [
   {
     description: "Build your first project with Solana & TypeScript",
     title: "Intro to Solana",
-    src: "/placeholder.webp",
+    src: "/courses/intro-course-ph.svg",
     ctaText: "Visit",
     ctaLink: "/course",
     content: () => {
@@ -222,7 +222,7 @@ const cards = [
   {
     description: "Ship a smart account app with Solana and Squads",
     title: "Smart Accounts with Squads",
-    src: "/placeholder.webp",
+    src: "/courses/squads-course-ph.svg",
     ctaText: "Visit",
     ctaLink: "/course",
     content: () => {
@@ -241,7 +241,7 @@ const cards = [
   {
     description: "Create a token gated app with Helius DAS API",
     title: "Token Gating w/ Helius",
-    src: "/placeholder.webp",
+    src: "/courses/helius-course-ph.svg",
     ctaText: "Visit",
     ctaLink: "/course",
     content: () => {
@@ -263,7 +263,7 @@ const cards = [
   {
     description: "Build an NFT ticketing app with Metaplex Core",
     title: "Ticketing with Metaplex Core",
-    src: "/placeholder.webp",
+    src: "/courses/metaplex-course-ph.svg",
     ctaText: "Visit",
     ctaLink: "/course",
     content: () => {

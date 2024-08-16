@@ -10,9 +10,8 @@ const Terminal = dynamic(
     (await import("@tutorialkit/components-react/core/Terminal")).Terminal
 );
 
-export default function BaseTerminal() {
+export default function BaseTerminal({ setTerminal }: { setTerminal: any }) {
   const [domLoaded, setDomLoaded] = useState(false);
-  const { terminal: term, setTerminal } = useSimpleEditor();
 
   useEffect(() => {
     setDomLoaded(true);

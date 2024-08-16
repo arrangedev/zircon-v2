@@ -15,28 +15,36 @@ import {
   IconBrandReact,
 } from "@tabler/icons-react";
 import { EditorDocument } from "@tutorialkit/components-react/core";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { set } from "react-hook-form";
 
 interface LanguageDropdownProps {
   setDocuments: (documents: Record<string, EditorDocument>) => void;
 }
 
 export function LanguageDropdown({ setDocuments }: LanguageDropdownProps) {
-  const { changeDocuments } = useSimpleEditor();
+  const { changeDocuments, setPreset } = useSimpleEditor();
   async function onValueChange(value: string) {
     if (value === "node") {
+      setPreset("node");
       setDocuments(DEFAULT_FILES);
       await changeDocuments(DEFAULT_FILES);
     } else if (value === "anchor") {
+      setPreset("anchor");
       setDocuments(ANCHOR_FILES);
       await changeDocuments(DEFAULT_FILES);
     } else if (value === "react") {
+      setPreset("react");
       setDocuments(REACT_FILES);
       await changeDocuments(DEFAULT_FILES);
     }
   }
 
   return (
-    <Select onValueChange={async (value) => await onValueChange(value)} defaultValue="node">
+    <Select
+      onValueChange={async (value) => await onValueChange(value)}
+      defaultValue="node"
+    >
       <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Select preset" />
       </SelectTrigger>
